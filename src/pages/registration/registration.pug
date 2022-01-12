@@ -1,0 +1,16 @@
+extends ../login/login
+
+block own-links
+    link(rel="stylesheet", type='text/css' href="registration.scss")
+    script(src='registration.js')
+
+block header
+    p Регистрация
+
+block content
+    include components/registration-form/registration-form
+
+block footer
+    include components/footer/footer.pug
+
+
