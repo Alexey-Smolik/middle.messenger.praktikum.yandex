@@ -4,7 +4,7 @@ const app = express();
 app.use(express.static('dist'));
 
 app.get('/', (req, res) => {
-    res.redirect('/registration');
+    res.sendFile(__dirname + '/dist/pages/login/login.html');
 });
 
 app.get('/login', (req, res) => {
