@@ -7,4 +7,4 @@
 - `npm run build` — сборка проекта.
 
 #[Макет](https://www.figma.com/file/9L5QgjcX5uxCiG4SWNDwJm/yandex-chat)
-#[Деплой](elegant-newton-779b71.netlify.app)
+Деплой: elegant-newton-779b71.netlify.app
