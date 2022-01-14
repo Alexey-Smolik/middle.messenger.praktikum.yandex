@@ -1,3 +1,3 @@
 function login() {
-    window.location.href = '/chat';
+    window.location.href = '/pages/chat/chat.html';
 }
