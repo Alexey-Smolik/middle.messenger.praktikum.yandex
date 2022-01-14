@@ -1,3 +1,3 @@
 [build]
     command = "npm run build"
-    publish = "dist/pages/login/login.html"
+    publish = "dist/pages/login"
