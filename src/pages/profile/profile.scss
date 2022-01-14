@@ -1,19 +1,28 @@
 .wrapper {
-  flex-direction: column;
-  gap: 60px;
+  display: flex;
+  gap: 20px;
+  height: 100%;
+  min-width: 400px;
 
-  &__header {
-    p {
-      font-size: 16px;
-      font-weight: bold;
-    }
+  &__left-panel {
+    width: 65px;
+    border-right: 1px solid #EAEAEA;
+    background-color: #FBFBFB;
   }
 
-  &__main-container {
-    width: 510px;
-    gap: 60px;
+  &__main-panel {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    .wrapper__header {
+    .container {
+      max-width: 510px;
+      width: 100%;
+    }
+
+    .header {
       height: 100px;
       display: flex;
       align-items: center;
@@ -25,61 +34,67 @@
       }
     }
 
-    .form {
+    .main-content {
+      gap: 60px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
 
-      div {
+      .form {
         display: flex;
-        padding-bottom: 9px;
+        flex-direction: column;
+        gap: 8px;
 
-        &:not(:last-child) {
-          border-bottom: 1px solid #EAEAEA;
-        }
+        div {
+          display: flex;
+          padding-bottom: 9px;
 
-        label {
-          font-size: 13px;
-        }
+          &:not(:last-child) {
+            border-bottom: 1px solid #EAEAEA;
+          }
 
-        input {
-          font-size: 13px;
-          margin-left: auto;
-          border: 0;
-          outline: 0;
-          text-align: end;
+          label {
+            font-size: 13px;
+          }
 
-          &[disabled] {
-            background-color: white;
-            color: #999999;
+          input {
+            font-size: 13px;
+            margin-left: auto;
+            border: 0;
+            outline: 0;
+            text-align: end;
+
+            &[disabled] {
+              background-color: white;
+              color: #999999;
+            }
           }
         }
       }
     }
-  }
 
-  &__footer {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-bottom: 10px;
+    .footer {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 10px;
 
-    div {
-      &:not(:last-child) {
-        padding-bottom: 10px;
-        border-bottom: 1px solid #EAEAEA;
-      }
-
-      &:last-child {
-        a {
-          color: #FF0000;
+      div {
+        &:not(:last-child) {
+          padding-bottom: 10px;
+          border-bottom: 1px solid #EAEAEA;
         }
-      }
 
-      a {
-        color: #3369F3;
-        font-size: 13px;
-        text-decoration: none;
+        &:last-child {
+          a {
+            color: #FF0000;
+          }
+        }
+
+        a {
+          color: #3369F3;
+          font-size: 13px;
+          text-decoration: none;
+        }
       }
     }
   }
