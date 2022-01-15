@@ -3,5 +3,5 @@
     publish = "dist"
 [[redirects]]
     from="/"
-    to="/pages/login/login.html"
+    to="/pages/login/index.html"
     status=200
