@@ -1,3 +1,5 @@
+@import 'src/styles/variables';
+
 .wrapper {
   height: 100%;
   display: flex;
@@ -25,7 +27,7 @@
 
       a {
         font-size: 11px;
-        color: #3369f3;
+        color: $blue;
         text-decoration: none;
       }
     }

@@ -1,3 +1,5 @@
+@import 'src/styles/variables';
+
 .wrapper {
   display: flex;
   gap: 20px;
@@ -6,8 +8,8 @@
 
   &__left-panel {
     width: 65px;
-    border-right: 1px solid #EAEAEA;
-    background-color: #FBFBFB;
+    border-right: 1px solid $light-border;
+    background-color: $light-background;
   }
 
   &__main-panel {
@@ -49,7 +51,7 @@
           padding-bottom: 9px;
 
           &:not(:last-child) {
-            border-bottom: 1px solid #EAEAEA;
+            border-bottom: 1px solid $light-border;
           }
 
           label {
@@ -64,8 +66,8 @@
             text-align: end;
 
             &[disabled] {
-              background-color: white;
-              color: #999999;
+              background-color: $white;
+              color: $disabled-text;
             }
           }
         }
@@ -81,17 +83,17 @@
       div {
         &:not(:last-child) {
           padding-bottom: 10px;
-          border-bottom: 1px solid #EAEAEA;
+          border-bottom: 1px solid $light-border;
         }
 
         &:last-child {
           a {
-            color: #FF0000;
+            color: $red;
           }
         }
 
         a {
-          color: #3369F3;
+          color: $blue;
           font-size: 13px;
           text-decoration: none;
         }

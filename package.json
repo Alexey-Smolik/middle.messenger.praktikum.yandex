@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build-watch": "parcel watch ./client/index.html",
-    "dev": "concurrently --kill-others \"npm run start-watch\" \"npm run build-watch\"",
     "build": "parcel build ./src/**/**/*.pug",
     "start": "parcel build ./src/**/**/*.pug && nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -28,7 +26,12 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "@parcel/transformer-pug": "^2.0.1",
+    "@parcel/transformer-sass": "^2.0.1",
+    "express": "^4.17.2",
+    "parcel": "^2.0.1",
+    "pug": "^3.0.2"
   },
   "engineStrict": true,
   "engines": {

@@ -1,3 +1,5 @@
+@import 'variables';
+
 *,
 *::before,
 *::after {
@@ -77,12 +79,12 @@ select {
 
 .primary-btn {
   width: 100%;
-  background: #3369F3;
+  background: $blue;
   border-radius: 8px;
   height: 37px;
   cursor: pointer;
   border: 0;
-  color: white;
+  color: $white;
   font-size: 13px;
 }
 

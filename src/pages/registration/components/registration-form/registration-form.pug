@@ -1,21 +1,24 @@
 form(class='form')
-    label(for='email') Почта
-    input(type='text', name='email', id='email')
+    div(class='fields')
+        label(for='email') Почта
+        input(type='text', name='email', id='email')
 
-    label(for='login') Логин
-    input(type='text', name='login', id='login')
+        label(for='login') Логин
+        input(type='text', name='login', id='login')
 
-    label(for='first_name') Имя
-    input(type='text', name='first_name', id='first_name')
+        label(for='first_name') Имя
+        input(type='text', name='first_name', id='first_name')
 
-    label(for='second_name') Фамилия
-    input(type='text', name='second_name', id='second_name')
+        label(for='second_name') Фамилия
+        input(type='text', name='second_name', id='second_name')
 
-    label(for='phone') Телефон
-    input(type='text', name='phone', id='phone')
+        label(for='phone') Телефон
+        input(type='text', name='phone', id='phone')
 
-    label(for='password') Пароль
-    input(type='password', name='password', id='password')
+        label(for='password') Пароль
+        input(type='password', name='password', id='password')
 
-    label(for='password') Пароль (ещё раз)
-    input(type='password', name='password2', id='password2')
+        label(for='password') Пароль (ещё раз)
+        input(type='password', name='password2', id='password2')
+
+    button(class='submit-btn primary-btn', type='button' onclick='register()') Зарегистрироваться
