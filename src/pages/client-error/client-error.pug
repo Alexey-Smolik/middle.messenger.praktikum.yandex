@@ -1,0 +1,14 @@
+extends ../../layouts/main
+
+block head
+    link(rel='stylesheet', type='text/css' href='../../styles/main.scss')
+    link(rel='stylesheet', type='text/css' href='../../styles/error.scss')
+
+block body
+    div(class='wrapper')
+        div(class='wrapper__main-container')
+            block content
+                p(class='main-text') 404
+                div(class='additional-text')
+                    p Не туда попали
+                    a(href='../chat/chat.pug') Назад к чатам
