@@ -10,6 +10,19 @@
     width: 65px;
     border-right: 1px solid $light-border;
     background-color: $light-background;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .icon {
+      height: 28px;
+      width: 28px;
+      background-image: url('../../static/svg/arrow.svg');
+    }
   }
 
   &__main-panel {
@@ -46,7 +59,7 @@
         flex-direction: column;
         gap: 8px;
 
-        div {
+        .row {
           display: flex;
           padding-bottom: 9px;
 
@@ -58,16 +71,22 @@
             font-size: 13px;
           }
 
-          input {
-            font-size: 13px;
+          .input {
             margin-left: auto;
-            border: 0;
-            outline: 0;
-            text-align: end;
 
-            &[disabled] {
-              background-color: $white;
-              color: $disabled-text;
+            input {
+              font-size: 13px;
+              margin-left: auto;
+              border: 0;
+              outline: 0;
+              border-bottom: 1px solid $blue;
+
+              &[disabled] {
+                background-color: $white;
+                color: $disabled-text;
+                text-align: end;
+                border: 0;
+              }
             }
           }
         }
@@ -80,10 +99,11 @@
       gap: 8px;
       padding-bottom: 10px;
 
-      div {
-        &:not(:last-child) {
-          padding-bottom: 10px;
-          border-bottom: 1px solid $light-border;
+      .footer-link {
+        a {
+          color: $blue;
+          font-size: 13px;
+          text-decoration: none;
         }
 
         &:last-child {
@@ -92,13 +112,15 @@
           }
         }
 
-        a {
-          color: $blue;
-          font-size: 13px;
-          text-decoration: none;
+        &:not(:last-child) {
+          padding-bottom: 10px;
+          border-bottom: 1px solid $light-border;
         }
       }
     }
+
+    .save-button-container {
+      display: none;
+    }
   }
 }
-

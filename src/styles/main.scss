@@ -1,4 +1,5 @@
 @import 'variables';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600&display=swap');
 
 *,
 *::before,
@@ -9,6 +10,7 @@
 ul[class],
 ol[class] {
   padding: 0;
+  list-style: none;
 }
 
 /* Убираем внешние отступы */
@@ -37,16 +39,9 @@ html {
 body {
   height: 100%;
   scroll-behavior: smooth;
-  text-rendering: optimizeSpeed;
-  font-family: 'Inter', sans-serif;
+  text-rendering: optimizespeed;
+  font-family: Inter, sans-serif;
 }
-
-
-ul[class],
-ol[class] {
-  list-style: none;
-}
-
 
 a:not([class]) {
   text-decoration-skip-ink: auto;
@@ -77,6 +72,10 @@ select {
   }
 }
 
+p {
+  margin-bottom: 0 !important;
+}
+
 .primary-btn {
   width: 100%;
   background: $blue;
@@ -88,4 +87,25 @@ select {
   font-size: 13px;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600&display=swap');
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $light-grey;
+  border-radius: 10px;
+}
+
+.error-text {
+  color: $red;
+  font-size: 8px;
+  margin-top: 5px;
+  display: none;
+}

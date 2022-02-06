@@ -3,46 +3,61 @@ extends ../../layouts/main
 block head
     link(rel='stylesheet', type='text/css' href='../../styles/main.scss')
     link(rel='stylesheet', href='profile.scss')
+    script(src='profile.ts', type='module')
 
 block body
     div(class='wrapper')
-        div(class='wrapper__left-panel')
-
+        div(id='backPanel', class='wrapper__left-panel')
+            .icon
         div(class='wrapper__main-panel')
             div(class='container')
                 div(class='header')
                     p Алексей
                 div(class='main-content')
-                    form(class='form')
-                        div
+                    form(id='profileForm', class='form')
+                        .row
                             label(for='email') Почта
-                            input(type='text', name='email', id='email', value='test@test.com', disabled)
+                            .input
+                                input(type='text', name='email', id='email', value='test@test.com', disabled)
+                                p(id='emailError', class='error-text')
 
-                        div
+                        .row
                             label(for='login') Логин
-                            input(type='text', name='login', id='login', value='alex', disabled)
+                            .input
+                                input(type='text', name='login', id='login', value='alex', disabled)
+                                p(id='loginError', class='error-text')
 
-                        div
+                        .row
                             label(for='first_name') Имя
-                            input(type='text', name='first_name', id='first_name', value='Алексей', disabled)
+                            .input
+                                input(type='text', name='first_name', id='first_name', value='Алексей', disabled)
+                                p(id='firstNameError', class='error-text')
 
-                        div
+                        .row
                             label(for='second_name') Фамилия
-                            input(type='text', name='second_name', id='second_name', value='Смолик', disabled)
+                            .input
+                                input(type='text', name='second_name', id='second_name', value='Смолик', disabled)
+                                p(id='secondNameError', class='error-text')
 
-                        div
+                        .row
                             label(for='display_name') Имя в чате
-                            input(type='text', name='display_name', id='display_name', value='Алекс', disabled)
+                            .input
+                                input(type='text', name='display_name', id='display_name', value='Алекс', disabled)
+                                p(id='displayNameError', class='error-text')
 
-                        div
+                        .row
                             label(for='phone') Телефон
-                            input(type='text', name='phone', id='phone', value='+375291111111', disabled)
+                            .input
+                                input(type='text', name='phone', id='phone', value='+375291111111', disabled)
+                                p(id='phoneError', class='error-text')
 
-                    div(class='footer')
-                        div
-                            a(href='') Изменить данные
-                        div
-                            a(href='') Изменить пароль
-                        div
-                            a(href='../login/index.pug') Выйти
+                    .footer(id='footer')
+                        .footer-link
+                            a(id='changeDataBtn', href='#') Изменить данные
+                        .footer-link
+                            a(href='#') Изменить пароль
+                        .footer-link
+                            a(href='../login/login.pug') Выйти
 
+                    .save-button-container(id='saveBtnContainer')
+                        button(id='saveBtn' class='primary-btn', type='button') Сохранить
