@@ -26,7 +26,8 @@
     "@parcel/transformer-pug": "^2.0.1",
     "@parcel/transformer-sass": "^2.0.1",
     "express": "^4.17.2",
-    "parcel": "^2.0.1"
+    "parcel": "^2.0.1",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@parcel/transformer-pug": "^2.0.1",
@@ -42,6 +43,7 @@
     "parcel": "^2.0.1",
     "pug": "^3.0.2",
     "stylelint": "^14.3.0",
-    "stylelint-config-standard-scss": "^3.0.0"
+    "stylelint-config-standard-scss": "^3.0.0",
+    "uuid": "^3.4.0"
   }
 }
