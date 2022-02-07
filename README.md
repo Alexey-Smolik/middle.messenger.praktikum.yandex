@@ -1,4 +1,6 @@
-Pull request: https://github.com/Alexey-Smolik/middle.messenger.praktikum.yandex/pull/1
+[Pull request (sprint 1)](https://github.com/Alexey-Smolik/middle.messenger.praktikum.yandex/pull/1)
+
+[Pull request (sprint 2)](https://github.com/Alexey-Smolik/middle.messenger.praktikum.yandex/pull/2)
 
 ## Описание
 
