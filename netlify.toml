@@ -1,7 +1,3 @@
 [build]
-    command = "npm run build"
+    command = "npm run dev"
     publish = "dist"
-[[redirects]]
-    from="/"
-    to="login.html"
-    status=200
