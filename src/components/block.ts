@@ -27,7 +27,6 @@ export class Block {
 
     const eventBus = new EventBus();
 
-    console.log(123);
     this._meta = {tagName, ...(this.props?.classForRoot ? {class: this.props.classForRoot} : {})};
     this._id = makeUUID();
     this.eventBus = () => eventBus;

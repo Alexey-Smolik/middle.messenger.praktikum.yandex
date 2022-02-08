@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (input.nodeName === 'INPUT') {
         validateField(input.name, input.value);
         input.setAttribute('disabled', 'true');
-        console.log(input.value);
       }
     });
   });

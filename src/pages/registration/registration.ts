@@ -22,7 +22,6 @@ function showFieldsValues() {
   inputs.forEach(input => {
     if (input.nodeName === 'INPUT') {
       validateField(input.name, input.value);
-      console.log(input.value);
     }
   });
 }
