@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "build": "parcel build index.pug",
-    "dev": "parcel ./index.pug --open --port 3001",
-    "start": "nodemon index.js",
+    "dev": "parcel ./index.pug --open --port 3000",
+    "start": "parcel build --no-optimize index.pug && nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "parcel watch ./src/**/**/**/*.**",
     "lint": "eslint ./src",
