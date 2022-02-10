@@ -1,5 +1,6 @@
 {
   "extends": "stylelint-config-standard-scss",
+  "ignoreFiles": ["**/*.css"],
   "rules": {
     "string-quotes": "single",
     "selector-class-pattern": "^[a-z-_]+$",
