@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "parcel build index.pug",
+    "build": "parcel build index.html",
     "dev": "parcel ./index.html --open --port 3000",
     "start": "parcel build index.html && nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
