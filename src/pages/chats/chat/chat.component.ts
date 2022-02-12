@@ -1,5 +1,16 @@
 import {Block} from '../../../components/block';
 
+interface ChatProps {
+  id: number;
+  name: string;
+  msg: string;
+  time: string;
+  count?: string
+  isSentMessage?: boolean;
+  classForRoot?: string;
+  events?: object;
+}
+
 const template = `.chat-wrapper
     .img-plug
     .msg-info
@@ -15,7 +26,7 @@ const template = `.chat-wrapper
                 .count
                     div #{count}`;
 
-export class ChatComponent extends Block {
+export class ChatComponent extends Block<ChatProps> {
   constructor(props) {
     super('section', props);
   }

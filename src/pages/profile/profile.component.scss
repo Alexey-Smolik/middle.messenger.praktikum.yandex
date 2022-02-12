@@ -1,6 +1,6 @@
 @import 'src/styles/variables';
 
-.wrapper {
+.profile-wrapper {
   display: flex;
   gap: 20px;
   height: 100%;
@@ -8,6 +8,7 @@
 
   &__left-panel {
     width: 65px;
+    height: 100%;
     border-right: 1px solid $light-border;
     background-color: $light-background;
     display: flex;
@@ -59,7 +60,7 @@
         flex-direction: column;
         gap: 8px;
 
-        .row {
+        .field {
           display: flex;
           padding-bottom: 9px;
 

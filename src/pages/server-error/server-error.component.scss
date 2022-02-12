@@ -1,10 +1,10 @@
 @import 'src/styles/variables';
 
-.wrapper {
+.server-error-wrapper {
   height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   &__main-container {
     display: flex;

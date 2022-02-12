@@ -1,25 +1,32 @@
-import {Block} from '../../../components/block';
-import {MessageComponent} from './message/message.component';
+import { Block } from '../../../components/block';
+import { MessageComponent } from './message/message.component';
+import { ChatModel } from '../mock-data';
 
-const defaultTemplate = '.plug Выберите чат чтобы отправить сообщение';
+interface MessagesWindowProps {
+  selectedChat: ChatModel;
+  messages: MessageComponent[];
+}
 
-const template = `.main-content-wrapper
+const template = `if selectedChat
+  .main-content-wrapper
     .header
-        .wrapper
-            .img-plug
-            span.user-name #{selectedChat.name}
-            .options-icon
+      .header-wrapper
+        .img-plug
+        span.user-name #{selectedChat.name}
+        .options-icon
     .messages-wrapper
-        .messages-container
-             each msg in messages
-                != msg
+      .messages-container
+        each msg in messages
+          != msg
     .footer-panel
-        form
-            .attachments-icon
-            input.message-input(id='messageInput' type='text', placeholder='Сообщение', name='message')
-            .send-icon.disabled(id='sendIcon')`;
+      form
+        .attachments-icon
+        input.message-input(id='messageInput' type='text', placeholder='Сообщение', name='message')
+        .send-icon.disabled(id='sendIcon')
+else
+  .plug Выберите чат чтобы отправить сообщение`;
 
-export class MessagesWindowComponent extends Block {
+export class MessagesWindowComponent extends Block<MessagesWindowProps> {
   messageComponents: MessageComponent[] = [];
 
   constructor(props) {
@@ -27,11 +34,7 @@ export class MessagesWindowComponent extends Block {
   }
 
   render() {
-    if (this.props.selectedChat) {
-      return this.compile(template, this.props);
-    }
-
-    return this.compile(defaultTemplate, this.props);
+    return this.compile(template, this.props);
   }
 
   addEvents() {

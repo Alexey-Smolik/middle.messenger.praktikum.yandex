@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "parcel build index.pug",
-    "dev": "parcel ./index.pug --open --port 3000",
+    "dev": "parcel ./index.html --open --port 3000",
     "start": "parcel build index.pug && nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "parcel watch ./src/**/**/**/*.**",

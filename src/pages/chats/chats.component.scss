@@ -1,12 +1,14 @@
 @import 'src/styles/variables';
 
-.wrapper {
+.chats-wrapper {
   display: flex;
   height: 100%;
+  min-width: 700px;
 
   &__left-panel {
     min-width: 310px;
     width: 310px;
+    height: 100%;
     background-color: $light-background;
     border-right: 1px solid $light-border;
     display: flex;
@@ -153,6 +155,7 @@
   }
 
   &__right-panel {
+    height: 100%;
     flex: 1;
     min-width: 400px;
     display: flex;
@@ -182,7 +185,7 @@
         .header {
           padding: 10px 20px 0;
 
-          .wrapper {
+          .header-wrapper {
             display: flex;
             align-items: center;
             gap: 10px;
