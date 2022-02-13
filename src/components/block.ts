@@ -1,8 +1,9 @@
 import { EventBus } from './event-bus';
 import { v4 as makeUUID } from 'uuid';
+import * as pug from 'pug';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const pug = require('pug');
+// const pug = require('pug');
 
 export interface Event {
   elementId: string,
