@@ -23,9 +23,7 @@
   },
   "homepage": "https://github.com/Alexey-Smolik/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
-    "buffer": "^6.0.3",
     "express": "^4.17.2",
-    "path": "^0.12.7",
     "pug": "^3.0.2",
     "uuid": "^8.3.2"
   },
