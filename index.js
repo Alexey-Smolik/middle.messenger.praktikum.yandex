@@ -7,8 +7,8 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/dist/index.html');
 });
 
-app.get('*', (req, res) => {
-    res.sendFile(__dirname + '/dist/src/pages/client-error/client-error.html');
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(__dirname + '/dist/src/pages/client-error/client-error.html');
+// });
 
 app.listen(3000, () => console.log('Listening on port 3000!'))
