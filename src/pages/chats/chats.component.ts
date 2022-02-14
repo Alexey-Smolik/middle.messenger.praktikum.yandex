@@ -43,7 +43,7 @@ export class ChatsComponent extends Block<ProfileProps> {
     this.chats = chatsData.map(props => {
       return new ChatComponent({
         ...props,
-        ...{ events: { click: () => this.onChatClick(props.id) } }
+        events: { click: () => this.onChatClick(props.id) }
       });
     });
 

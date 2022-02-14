@@ -11,25 +11,26 @@ Array.from(linksContainer.getElementsByClassName('link')).forEach(link => {
   link.addEventListener('click', event => {
     linksContainer.style.display = 'none';
     history.replaceState(null, '', `/${event.target.id}`);
+    const appEl = document.getElementById('app');
 
     switch (event.target.id) {
       case 'login-page':
-        document.getElementById('app')?.appendChild((new LoginComponent({ classForRoot: 'login-wrapper' })).getContent());
+        appEl?.appendChild((new LoginComponent({ classForRoot: 'login-wrapper' })).getContent());
         break;
       case 'registration-page':
-        document.getElementById('app')?.appendChild((new RegistrationComponent({ classForRoot: 'registration-wrapper' })).getContent());
+        appEl?.appendChild((new RegistrationComponent({ classForRoot: 'registration-wrapper' })).getContent());
         break;
       case 'chats-page':
-        document.getElementById('app')?.appendChild((new ChatsComponent({ classForRoot: 'chats-wrapper' })).getContent());
+        appEl?.appendChild((new ChatsComponent({ classForRoot: 'chats-wrapper' })).getContent());
         break;
       case 'profile-page':
-        document.getElementById('app')?.appendChild((new ProfileComponent({ classForRoot: 'profile-wrapper' })).getContent());
+        appEl?.appendChild((new ProfileComponent({ classForRoot: 'profile-wrapper' })).getContent());
         break;
       case 'client-error-page':
-        document.getElementById('app')?.appendChild((new ClientErrorComponent({ classForRoot: 'client-error-wrapper' })).getContent());
+        appEl?.appendChild((new ClientErrorComponent({ classForRoot: 'client-error-wrapper' })).getContent());
         break;
       case 'server-error-page':
-        document.getElementById('app')?.appendChild((new ServerErrorComponent({ classForRoot: 'server-error-wrapper' })).getContent());
+        appEl?.appendChild((new ServerErrorComponent({ classForRoot: 'server-error-wrapper' })).getContent());
         break;
     }
   })
