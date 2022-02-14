@@ -1,5 +1,6 @@
 import { EventBus } from './event-bus';
 import { v4 as makeUUID } from 'uuid';
+
 const pug = require('pug');
 
 export class Block<TProps> {
