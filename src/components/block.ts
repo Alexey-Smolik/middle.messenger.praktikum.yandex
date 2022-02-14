@@ -1,7 +1,6 @@
 import { EventBus } from './event-bus';
 import { v4 as makeUUID } from 'uuid';
-
-const pug = require('pug');
+import * as pug from 'pug';
 
 export class Block<TProps> {
   static EVENTS = {
