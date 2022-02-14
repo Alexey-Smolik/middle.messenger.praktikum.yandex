@@ -15,7 +15,7 @@ const template = `.chats-wrapper__left-panel
   .header-container
     .header
       .header__profile-link
-        a(href='../profile/profile.pug') Профиль >
+        a(href='#') Профиль >
       .header__search
         input(type='text', placeholder='Поиск')
   .chats-container(id='chats')

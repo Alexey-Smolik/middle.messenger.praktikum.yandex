@@ -9,7 +9,7 @@ const template = `.server-error-wrapper__main-container
   p(class='main-text') 500
   .additional-text
     p Мы уже фиксим
-    a(href='../chats/chats.pug') Назад к чатам`;
+    a(href='#') Назад к чатам`;
 
 export class ServerErrorComponent extends Block<ServerErrorProps> {
   constructor(props: ServerErrorProps) {

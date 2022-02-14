@@ -60,7 +60,7 @@ const template = `.profile-wrapper__left-panel
         .footer-link
           a(href='#') Изменить пароль
         .footer-link
-          a(href='../login/login.pug') Выйти
+          a(href='#') Выйти
 
       .save-button-container(id='saveBtnContainer')
         button(id='saveBtn' class='primary-btn', type='button') Сохранить`;

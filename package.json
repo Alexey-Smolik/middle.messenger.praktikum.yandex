@@ -22,6 +22,11 @@
     "url": "https://github.com/Alexey-Smolik/middle.messenger.praktikum.yandex/issues"
   },
   "homepage": "https://github.com/Alexey-Smolik/middle.messenger.praktikum.yandex#readme",
+  "targets": {
+    "default": {
+      "context": "browser"
+    }
+  },
   "dependencies": {
     "express": "^4.17.2",
     "pug": "^3.0.2",
@@ -36,7 +41,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
     "nodemon": "^2.0.15",
-    "os-browserify": "^0.3.0",
     "parcel": "^2.0.1",
     "sass": "^1.49.7",
     "stylelint": "^14.3.0",

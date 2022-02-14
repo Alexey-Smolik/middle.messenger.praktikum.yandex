@@ -21,7 +21,7 @@ const template = `.login-wrapper__main-container
           != field
     button(id='loginButton' class='submit-btn primary-btn', type='button') Авторизоваться
   .login-wrapper__footer
-    a(href='../registration/registration.pug') Нет аккаунта?`;
+    a(href='#') Нет аккаунта?`;
 
 export class LoginComponent extends Block<LoginProps> {
   loginField: FormFieldComponent[];

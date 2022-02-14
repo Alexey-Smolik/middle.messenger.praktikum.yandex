@@ -9,7 +9,7 @@ const template = `.client-error-wrapper__main-container
   p(class='main-text') 404
   .additional-text
     p Не туда попали
-    a(href='../chats/chats.pug') Назад к чатам`;
+    a(href='#') Назад к чатам`;
 
 export class ClientErrorComponent extends Block<ClientErrorProps> {
   constructor(props: ClientErrorProps) {

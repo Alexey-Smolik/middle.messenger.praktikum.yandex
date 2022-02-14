@@ -41,7 +41,7 @@ const template = `.registration-wrapper__main-container
           != field
     button(id='registerButton' class='submit-btn primary-btn', type='button') Зарегистрироваться
   .registration-wrapper__footer
-    a(href='../login/login.pug') Войти`;
+    a(href='#') Войти`;
 
 export class RegistrationComponent extends Block<RegistrationProps> {
   emailField: FormFieldComponent[];

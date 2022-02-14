@@ -1,12 +1,6 @@
 import { EventBus } from './event-bus';
 import { v4 as makeUUID } from 'uuid';
-import * as pug from 'pug';
-
-export interface Event {
-  elementId: string,
-  eventName: string,
-  callBack: () => void
-}
+const pug = require('pug');
 
 export class Block<TProps> {
   static EVENTS = {
