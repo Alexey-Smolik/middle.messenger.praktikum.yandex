@@ -18,4 +18,4 @@
 
 # [Макет](https://www.figma.com/file/9L5QgjcX5uxCiG4SWNDwJm/yandex-chatComponent)
 
-# [Деплой](https://deploy-preview-1--elegant-brown-0a2240.netlify.app/)
+# [Деплой](https://deploy-preview-2--elegant-brown-0a2240.netlify.app/)
