@@ -4,7 +4,6 @@
   display: flex;
   height: 100%;
   min-width: 700px;
-
   &__left-panel {
     min-width: 310px;
     width: 310px;
@@ -235,14 +234,6 @@
               line-height: 15px;
               position: relative;
 
-              .message-time {
-                position: absolute;
-                right: 10px;
-                bottom: 3px;
-                font-weight: 500;
-                font-size: 9px;
-              }
-
               &.sent-msg {
                 background-color: $blue-background;
                 border-radius: 10px 10px 0;
@@ -259,6 +250,14 @@
                 .message-time {
                   color: $disabled-text;
                 }
+              }
+
+              .message-time {
+                position: absolute;
+                right: 10px;
+                bottom: 3px;
+                font-weight: 500;
+                font-size: 9px;
               }
             }
 
