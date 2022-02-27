@@ -1,0 +1,11 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "ignoreFiles": ["**/*.css"],
+  "rules": {
+    "string-quotes": "single",
+    "selector-class-pattern": "^[a-z-_]+$",
+    "property-no-vendor-prefix": [true, { "ignoreProperties": ["line-clamp", "box-orient", "box"] }],
+    "value-no-vendor-prefix": [true, { "ignoreValues": ["box"]}],
+    "no-descending-specificity": [true, { "ignore": ["selectors-within-list"]}]
+  }
+}
