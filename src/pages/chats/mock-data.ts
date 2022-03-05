@@ -22,7 +22,6 @@ export const chatsData: ChatModel[] = [
     msg: 'Изображение',
     time: '10:49',
     count: '2',
-    classForRoot: 'chat-section'
   },
   {
     id: 1,
@@ -30,7 +29,6 @@ export const chatsData: ChatModel[] = [
     msg: 'cтикер',
     time: '12:00',
     isSentMessage: true,
-    classForRoot: 'chat-section'
   },
   {
     id: 2,
@@ -38,7 +36,6 @@ export const chatsData: ChatModel[] = [
     msg: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
     time: '15:12',
     count: '4',
-    classForRoot: 'chat-section'
   },
   {
     id: 3,
@@ -47,7 +44,6 @@ export const chatsData: ChatModel[] = [
     time: 'Пт',
     isSentMessage: true,
     count: '22',
-    classForRoot: 'chat-section'
   },
   {
     id: 4,
@@ -56,77 +52,66 @@ export const chatsData: ChatModel[] = [
     time: 'Ср',
     isSentMessage: true,
     count: '100',
-    classForRoot: 'chat-section'
   },
   {
     id: 5,
     name: '1,2,3',
     msg: 'Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
     time: 'Пн',
-    classForRoot: 'chat-section'
   },
   {
     id: 6,
     name: 'Design Destroyer',
     msg: 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.',
     time: 'Пн',
-    classForRoot: 'chat-section'
   },
   {
     id: 7,
     name: 'Day.',
     msg: 'Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur',
     time: '1 мая 2020',
-    classForRoot: 'chat-section'
   },
   {
     id: 8,
     name: 'Стас Рогозин',
     msg: 'Можно или сегодня или завтра',
     time: '12 апреля 2020',
-    classForRoot: 'chat-section'
   },
   {
     id: 9,
     name: 'Стас Рогозин',
     msg: 'Можно или сегодня или завтра',
     time: '12 апреля 2020',
-    classForRoot: 'chat-section'
   },
   {
     id: 10,
     name: 'Стас Рогозин',
     msg: 'Можно или сегодня или завтра',
     time: '12 апреля 2020',
-    classForRoot: 'chat-section'
   },
   {
     id: 11,
     name: 'Стас Рогозин',
     msg: 'Можно или сегодня или завтра',
     time: '12 апреля 2020',
-    classForRoot: 'chat-section'
   },
   {
     id: 12,
     name: 'Стас Рогозин',
     msg: 'Можно или сегодня или завтра',
     time: '12 апреля 2020',
-    classForRoot: 'chat-section'
   },
   {
     id: 13,
     name: 'Стас Рогозин',
     msg: 'Можно или сегодня или завтра',
     time: '12 апреля 2020',
-    classForRoot: 'chat-section'
   },
   {
     id: 14,
     name: 'Стас Рогозин',
     msg: 'Можно или сегодня или завтра',
     time: '12 апреля 2020',
-    classForRoot: 'chat-section'
   },
 ];
 

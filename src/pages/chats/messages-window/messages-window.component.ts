@@ -1,10 +1,9 @@
 import { Block } from '../../../components/block';
-import { MessageComponent } from './message/message.component';
-import { ChatModel } from '../mock-data';
+import { ChatModel, MessageModel } from '../mock-data';
 
 interface MessagesWindowProps {
   selectedChat: ChatModel;
-  messages: MessageComponent[];
+  messages: MessageModel[];
 }
 
 const template = `if selectedChat
@@ -16,8 +15,9 @@ const template = `if selectedChat
         .options-icon
     .messages-wrapper
       .messages-container
-        each msg in messages
-          != msg
+        each message in messages
+          .message(class=message.isSentMessage ? 'sent-msg' : 'received-msg') #{message.text}
+            span.message-time #{message.date.getHours()}:#{message.date.getMinutes()}
     .footer-panel
       form
         .attachments-icon
@@ -27,9 +27,7 @@ else
   .plug Выберите чат чтобы отправить сообщение`;
 
 export class MessagesWindowComponent extends Block<MessagesWindowProps> {
-  messageComponents: MessageComponent[] = [];
-
-  constructor(props) {
+  constructor(props: MessagesWindowProps) {
     super('section', props);
   }
 

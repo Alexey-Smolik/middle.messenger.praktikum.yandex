@@ -59,19 +59,16 @@
     .chats-container {
       overflow: auto;
 
-      .chat-section {
-        padding: 0 10px;
-
-        &:hover {
-          background-color: $hover-background;
-          cursor: pointer;
-        }
-
-        .chat-wrapper {
+      .chat-wrapper {
           display: flex;
           gap: 10px;
-          padding: 10px 0;
+          padding: 10px 10px;
           border-bottom: 1px solid $light-border;
+
+          &:hover {
+            background-color: $hover-background;
+            cursor: pointer;
+          }
 
           .img-plug {
             background: $light-grey;
@@ -148,8 +145,7 @@
               }
             }
           }
-        }
-      }
+    }
     }
   }
 
@@ -237,6 +233,7 @@
               &.sent-msg {
                 background-color: $blue-background;
                 border-radius: 10px 10px 0;
+                margin-left: auto;
 
                 .message-time {
                   color: $blue;
@@ -246,6 +243,7 @@
               &.received-msg {
                 background-color: $grey-background;
                 border-radius: 0 10px 10px;
+                margin-right: auto;
 
                 .message-time {
                   color: $disabled-text;

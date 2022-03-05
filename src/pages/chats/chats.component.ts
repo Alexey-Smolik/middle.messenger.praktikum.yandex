@@ -1,14 +1,15 @@
-import { Block } from '../../components/block';
+import {Block, Event} from '../../components/block';
 import './chats.component.scss';
 import { chatsData, messagesData } from './mock-data';
-import { ChatComponent } from './chat/chat.component';
+import { ChatsListComponent } from './chats-list/chats-list.component';
 import { MessagesWindowComponent } from './messages-window/messages-window.component';
-import { MessageComponent } from './messages-window/message/message.component';
+import { MessagesListComponent } from './messages-window/messages-list/messages-list.component';
 
 interface ProfileProps {
-  chats?: ChatComponent[];
-  messagesWindow?: MessagesWindowComponent[];
+  chatsList?: ChatsListComponent;
+  messagesWindow?: MessagesWindowComponent;
   classForRoot: string;
+  // events?: Event[];
 }
 
 const template = `.chats-wrapper__left-panel
@@ -19,16 +20,12 @@ const template = `.chats-wrapper__left-panel
       .header__search
         input(type='text', placeholder='Поиск')
   .chats-container(id='chats')
-    if chats
-      each chat in chats
-        != chat
+    != chatsList
 .chats-wrapper__right-panel
-  if messagesWindow
-    each window in messagesWindow
-      != window`;
+  != messagesWindow`;
 
 export class ChatsComponent extends Block<ProfileProps> {
-  chats: ChatComponent[];
+  // chatsList: ChatsListComponent[];
 
   constructor(props: ProfileProps) {
     super('div', props)
@@ -40,30 +37,23 @@ export class ChatsComponent extends Block<ProfileProps> {
   }
 
   private initChildren() {
-    this.chats = chatsData.map(props => {
-      return new ChatComponent({
-        ...props,
-        events: { click: () => this.onChatClick(props.id) }
-      });
+    this.children.chatsList = new ChatsListComponent({
+      chats: chatsData,
+      click: this.onChatClick.bind(this)
     });
-
-    this.children.chats = this.chats;
-    this.children.messagesWindow = [new MessagesWindowComponent({ selectedChat: null, messages: [] })];
+    this.children.messagesWindow = new MessagesWindowComponent({ selectedChat: null, messages: [] });
 
     this.setProps({
       ...this.props,
-      chats: this.children.chats,
+      chatsList: this.children.chatsList,
       messagesWindow: this.children.messagesWindow
-    })
+    });
   }
 
   private onChatClick(id: number) {
-    const messages: MessageComponent[] = messagesData.map(msg => new MessageComponent(msg));
-
-    this.children.messagesWindow[0].children.messages = messages;
-    this.children.messagesWindow[0].setProps({
+    this.children.messagesWindow.setProps({
       selectedChat: chatsData.find(chat => chat.id === id),
-      messages: messages,
+      messages: messagesData
     });
   }
 }

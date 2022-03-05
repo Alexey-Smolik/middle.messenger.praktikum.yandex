@@ -4,7 +4,7 @@ import * as pug from 'pug';
 
 export interface Event {
   name: string;
-  fieldId: string;
+  fieldId?: string;
   callback: (event?: any) => void;
 }
 
@@ -153,7 +153,7 @@ export class Block<TProps> {
     const events: Event[] = this.props?.events || [];
 
     events.forEach(event => {
-      this._element.querySelector(`#${event.fieldId}`).addEventListener(event.name, event.callback);
+      (event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element).addEventListener(event.name, event.callback);
     });
   }
 
@@ -162,7 +162,7 @@ export class Block<TProps> {
     const events: Event[] = this.props?.events || [];
 
     events.forEach(event => {
-      this._element.querySelector(`#${event.fieldId}`).removeEventListener(event.name, event.callback);
+      (event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element).removeEventListener(event.name, event.callback);
     });
   }
 
@@ -170,7 +170,6 @@ export class Block<TProps> {
     const propsAndStubs = {...props};
 
     Object.entries(this.children).forEach(([key, child]) => {
-      // propsAndStubs[key] = child.map(el => `<div data-id='${el._id}'></div>`);
       propsAndStubs[key] = `<div data-id='${child._id}'></div>`;
     });
 
@@ -179,12 +178,6 @@ export class Block<TProps> {
     fragment.innerHTML = pug.compile(template)(propsAndStubs);
 
     Object.values(this.children).forEach(child => {
-      // child.forEach(el => {
-      //   const stub = fragment.content.querySelector(`[data-id='${el._id}']`);
-      //
-      //   stub.replaceWith(el.getContent());
-      // })
-
       const stub = fragment.content.querySelector(`[data-id='${child._id}']`);
 
       stub.replaceWith(child.getContent());

@@ -1,24 +1,24 @@
-import { Block } from '../../components/block';
+import {Block, Event} from '../../components/block';
 import './profile.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
 
 interface ProfileProps {
-  emailField?: FormFieldComponent[];
-  loginField?: FormFieldComponent[];
-  firstNameField?: FormFieldComponent[];
-  secondNameField?: FormFieldComponent[];
-  displayNameField?: FormFieldComponent[];
-  phoneField?: FormFieldComponent[];
+  emailField?: FormFieldComponent;
+  loginField?: FormFieldComponent;
+  firstNameField?: FormFieldComponent;
+  secondNameField?: FormFieldComponent;
+  displayNameField?: FormFieldComponent;
+  phoneField?: FormFieldComponent;
   classForRoot: string;
 }
 
 interface ProfileFields {
-  emailField: FormFieldComponent[];
-  loginField: FormFieldComponent[];
-  firstNameField: FormFieldComponent[];
-  secondNameField: FormFieldComponent[];
-  displayNameField: FormFieldComponent[];
-  phoneField: FormFieldComponent[];
+  emailField: FormFieldComponent;
+  loginField: FormFieldComponent;
+  firstNameField: FormFieldComponent;
+  secondNameField: FormFieldComponent;
+  displayNameField: FormFieldComponent;
+  phoneField: FormFieldComponent;
 }
 
 const template = `.profile-wrapper__left-panel
@@ -29,31 +29,14 @@ const template = `.profile-wrapper__left-panel
       p Алексей
     .main-content
       form(id='profileForm', class='form')
-        if emailField
-          each field in emailField
-            != field
-        if loginField
-          each field in loginField
-            != field
-        if firstNameField
-          each field in firstNameField
-            != field
-        if secondNameField
-          each field in secondNameField
-            != field
-        if displayNameField
-          each field in displayNameField
-            != field
-        if phoneField
-          each field in phoneField
-            != field    
-        if passwordField
-          each field in passwordField
-            != field
-        if password2Field
-          each field in password2Field
-            != field   
-              
+        != emailField
+        != loginField
+        != firstNameField
+        != secondNameField
+        != displayNameField
+        != phoneField
+        != passwordField
+        != password2Field 
       .footer(id='footer')
         .footer-link
           a(id='changeDataBtn', href='#') Изменить данные
@@ -76,10 +59,6 @@ export class ProfileComponent extends Block<ProfileProps> {
     phoneFieldValue: '',
   };
 
-  get changeDataBtn() {
-    return this.getContent().querySelector('#changeDataBtn');
-  }
-
   get saveBtnContainer() {
     return this.getContent().querySelector('#saveBtnContainer');
   }
@@ -99,47 +78,23 @@ export class ProfileComponent extends Block<ProfileProps> {
     return this.compile(template, this.props);
   }
 
-  private initChildrenEvents() {
-   Object.keys(this.fields).forEach(key => {
-      const inputField = this.fields[key][0].getContent().querySelector(`#${this.fields[key][0].props.id}`);
-
-      inputField.addEventListener('blur', event => {
-        this.validateField(
-          this.fields[key][0].getContent().querySelector(`#${this.fields[key][0].props.validationFieldId}`),
-          this.fields[key][0].props,
-          event?.target?.value
-        );
-      });
-
-      inputField.addEventListener('input', event => {
-        this.profileFieldsValues[`${event.target.name}FieldValue`] = event.target.value;
-      });
-    });
-  }
-
   private initComponentEvents() {
-    this.changeDataBtn?.addEventListener('click', () => {
+    this.getContent().querySelector('#changeDataBtn').addEventListener('click', () => {
       this.saveBtnContainer.style.display = 'block';
       this.footer.style.display = 'none';
 
       Object.keys(this.fields).forEach(key => {
-        this.fields[key][0].setProps({ disabled: false });
+        this.fields[key].setProps({ disabled: false });
       });
-
-      this.initChildrenEvents();
     });
 
     this.getContent().querySelector('#saveBtn')?.addEventListener('click', () => {
       this.footer.style.display = 'block';
       this.saveBtnContainer.style.display = 'none';
 
-      if (Object.keys(this.fields).map(key => {
-        return this.validateField(
-          this.fields[key][0].getContent().querySelector(`#${this.fields[key][0].props.validationFieldId}`),
-          this.fields[key][0].props,
-          this.profileFieldsValues[`${this.fields[key][0].props.name}FieldValue`]
-        );
-      }).every(validation => validation)) {
+      if (Object.keys(this.fields).map(
+        key => this.validateField(this.fields[key])
+      ).every(validation => validation)) {
         console.log(this.profileFieldsValues);
       }
     });
@@ -147,91 +102,86 @@ export class ProfileComponent extends Block<ProfileProps> {
 
   private initChildren() {
     this.fields = {
-      emailField: [
-        new FormFieldComponent({
-          id: 'email',
-          name: 'email',
-          type: 'text',
-          validationFieldId: 'emailError',
-          labelText: 'Почта',
-          errorText: 'Некорректный email',
-          regexp: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-          classForRoot: 'field',
-          wrapField: true,
-          disabled: true,
-        })
-      ],
-      loginField: [
-        new FormFieldComponent({
-          id: 'login',
-          name: 'login',
-          type: 'text',
-          validationFieldId: 'loginError',
-          labelText: 'Логин',
-          errorText: 'Некорректный логин',
-          regexp: /(?=.*[a-zA-Z-_])[a-zA-z0-9-_]{3,20}$/,
-          classForRoot: 'field',
-          wrapField: true,
-          disabled: true,
-        })
-      ],
-      firstNameField: [
-        new FormFieldComponent({
-          id: 'firstName',
-          name: 'firstName',
-          type: 'text',
-          validationFieldId: 'firstNameError',
-          labelText: 'Имя',
-          errorText: 'Некорректное имя',
-          regexp: /^[A-ZА-Я][a-zа-я-]*$/,
-          classForRoot: 'field',
-          wrapField: true,
-          disabled: true,
-        })
-      ],
-      secondNameField: [
-        new FormFieldComponent({
-          id: 'secondName',
-          name: 'secondName',
-          type: 'text',
-          validationFieldId: 'secondNameError',
-          labelText: 'Фамилия',
-          errorText: 'Некорректная фамилия',
-          regexp: /^[A-ZА-Я][a-zа-я-]*$/,
-          classForRoot: 'field',
-          wrapField: true,
-          disabled: true,
-        })
-      ],
-      displayNameField: [
-        new FormFieldComponent({
-          id: 'displayName',
-          name: 'displayName',
-          type: 'text',
-          validationFieldId: 'displayNameError',
-          labelText: 'Имя в чате',
-          errorText: 'Некорректное имя',
-          regexp: /^[a-zа-я-A-ZА-Я]{1,10}$/,
-          classForRoot: 'field',
-          wrapField: true,
-          disabled: true,
-        })
-      ],
-      phoneField: [
-        new FormFieldComponent({
-          id: 'phone',
-          name: 'phone',
-          type: 'text',
-          validationFieldId: 'phoneError',
-          labelText: 'Телефон',
-          errorText: 'Неверный телефон',
-          regexp: /^(\+)?\d{5,15}$/,
-          classForRoot: 'field',
-          wrapField: true,
-          disabled: true,
-        })
-      ]
+      emailField: new FormFieldComponent({
+        id: 'email',
+        name: 'email',
+        type: 'text',
+        validationFieldId: 'emailError',
+        labelText: 'Почта',
+        errorText: 'Некорректный email',
+        regexp: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+        classForRoot: 'field',
+        wrapField: true,
+        disabled: true,
+      }),
+      loginField: new FormFieldComponent({
+        id: 'login',
+        name: 'login',
+        type: 'text',
+        validationFieldId: 'loginError',
+        labelText: 'Логин',
+        errorText: 'Некорректный логин',
+        regexp: /(?=.*[a-zA-Z-_])[a-zA-z0-9-_]{3,20}$/,
+        classForRoot: 'field',
+        wrapField: true,
+        disabled: true,
+      }),
+      firstNameField: new FormFieldComponent({
+        id: 'firstName',
+        name: 'firstName',
+        type: 'text',
+        validationFieldId: 'firstNameError',
+        labelText: 'Имя',
+        errorText: 'Некорректное имя',
+        regexp: /^[A-ZА-Я][a-zа-я-]*$/,
+        classForRoot: 'field',
+        wrapField: true,
+        disabled: true,
+      }),
+      secondNameField: new FormFieldComponent({
+        id: 'secondName',
+        name: 'secondName',
+        type: 'text',
+        validationFieldId: 'secondNameError',
+        labelText: 'Фамилия',
+        errorText: 'Некорректная фамилия',
+        regexp: /^[A-ZА-Я][a-zа-я-]*$/,
+        classForRoot: 'field',
+        wrapField: true,
+        disabled: true,
+      }),
+      displayNameField: new FormFieldComponent({
+        id: 'displayName',
+        name: 'displayName',
+        type: 'text',
+        validationFieldId: 'displayNameError',
+        labelText: 'Имя в чате',
+        errorText: 'Некорректное имя',
+        regexp: /^[a-zа-я-A-ZА-Я]{1,10}$/,
+        classForRoot: 'field',
+        wrapField: true,
+        disabled: true,
+      }),
+      phoneField: new FormFieldComponent({
+        id: 'phone',
+        name: 'phone',
+        type: 'text',
+        validationFieldId: 'phoneError',
+        labelText: 'Телефон',
+        errorText: 'Неверный телефон',
+        regexp: /^(\+)?\d{5,15}$/,
+        classForRoot: 'field',
+        wrapField: true,
+        disabled: true,
+      })
     };
+
+    this.fields.emailField.setProps(this.getFieldEvents(this.fields.emailField));
+    this.fields.loginField.setProps(this.getFieldEvents(this.fields.loginField));
+    this.fields.firstNameField.setProps(this.getFieldEvents(this.fields.firstNameField));
+    this.fields.secondNameField.setProps(this.getFieldEvents(this.fields.secondNameField));
+    this.fields.displayNameField.setProps(this.getFieldEvents(this.fields.displayNameField));
+    this.fields.phoneField.setProps(this.getFieldEvents(this.fields.phoneField));
 
     this.children.emailField = this.fields.emailField;
     this.children.loginField = this.fields.loginField;
@@ -251,17 +201,26 @@ export class ProfileComponent extends Block<ProfileProps> {
     })
   }
 
-  private validateField(validationField: HTMLElement, fieldProps, value: string): boolean {
-    if (fieldProps.regexp.test(value)) {
-      validationField.innerHTML = '';
-      validationField.style.display = 'none';
+  private getFieldEvents(field: FormFieldComponent): { events: Event[] } {
+    return {
+      events: [{
+        name: 'blur',
+        fieldId: field.props.id || '',
+        callback: () => this.validateField(field)
+      }, {
+        name: 'input',
+        fieldId: field.props.id || '',
+        callback: event => this.profileFieldsValues[`${field.props.name}FieldValue`] = event.target.value
+      }]
+    };
+  }
 
-      return true;
-    }
+  private validateField(field: FormFieldComponent): boolean {
+    const fieldValue = this.profileFieldsValues[`${field.props.name}FieldValue`];
+    const isValid = field.props.regexp?.test(fieldValue);
 
-    validationField.innerHTML = fieldProps.errorText;
-    validationField.style.display = 'block';
+    field.setProps({ showErrorText: !isValid, fieldValue: fieldValue });
 
-    return false;
+    return isValid as boolean;
   }
 }
