@@ -1,6 +1,7 @@
-import {Block, Event} from '../../components/block';
+import { Block, Event } from '../../components/block';
 import './registration.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
+import {HTTPTransport} from "../../services/request.service";
 
 interface RegistrationProps {
   emailField?: FormFieldComponent;
@@ -27,7 +28,7 @@ const template = `.registration-wrapper__main-container
       != password2Field
     button(id='registerButton' class='submit-btn primary-btn', type='button') Зарегистрироваться
   .registration-wrapper__footer
-    a(href='#') Войти`;
+    a(href='/') Войти`;
 
 export class RegistrationComponent extends Block<RegistrationProps> {
   emailField: FormFieldComponent;
@@ -47,6 +48,8 @@ export class RegistrationComponent extends Block<RegistrationProps> {
     passwordFieldValue: '',
     password2FieldValue: '',
   };
+
+  transport = new HTTPTransport();
 
   constructor(props: RegistrationProps) {
     super('div', props)
@@ -71,7 +74,20 @@ export class RegistrationComponent extends Block<RegistrationProps> {
       ].map(
           field => this.validateField(field)
       ).every(validation => validation)) {
-        console.log(this.registrationFieldsValues);
+        this.transport.post('/auth/signup', {
+          data: {
+            first_name: this.registrationFieldsValues.firstNameFieldValue,
+            second_name: this.registrationFieldsValues.secondNameFieldValue,
+            login: this.registrationFieldsValues.loginFieldValue,
+            email: this.registrationFieldsValues.emailFieldValue,
+            password: this.registrationFieldsValues.passwordFieldValue,
+            phone: this.registrationFieldsValues.phoneFieldValue
+          }
+        }).then(res => {
+          console.log(res);
+        }).catch(err => {
+          console.log(JSON.parse(err.data));
+        });
       }
     });
   }
@@ -144,7 +160,7 @@ export class RegistrationComponent extends Block<RegistrationProps> {
       validationFieldId: 'phoneError',
       labelText: 'Телефон',
       errorText: 'Неверный телефон',
-      regexp: /^(\+)?\d{5,15}$/,
+      regexp: /^\d{5,15}$/,
       classForRoot: 'field',
       fieldValue: '',
       showErrorText: false,

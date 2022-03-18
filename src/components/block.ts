@@ -180,7 +180,9 @@ export class Block<TProps> {
     Object.values(this.children).forEach(child => {
       const stub = fragment.content.querySelector(`[data-id='${child._id}']`);
 
-      stub.replaceWith(child.getContent());
+      if (stub) {
+        stub.replaceWith(child.getContent());
+      }
     });
 
     return fragment.content;

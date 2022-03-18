@@ -1,22 +1,25 @@
-import {Block, Event} from '../../components/block';
+import { Block } from '../../components/block';
 import './chats.component.scss';
-import { chatsData, messagesData } from './mock-data';
-import { ChatsListComponent } from './chats-list/chats-list.component';
+import { messagesData } from './mock-data';
+import {Chat, ChatsListComponent} from './chats-list/chats-list.component';
 import { MessagesWindowComponent } from './messages-window/messages-window.component';
-import { MessagesListComponent } from './messages-window/messages-list/messages-list.component';
+import {HTTPTransport} from "../../services/request.service";
+import {isLogin} from "../../services/auth.service";
 
 interface ProfileProps {
   chatsList?: ChatsListComponent;
   messagesWindow?: MessagesWindowComponent;
   classForRoot: string;
-  // events?: Event[];
 }
+
+const transport = new HTTPTransport();
+const avatarUrl = 'https://ya-praktikum.tech/api/v2/resources';
 
 const template = `.chats-wrapper__left-panel
   .header-container
     .header
       .header__profile-link
-        a(href='#') Профиль >
+        a(href='/settings') Профиль >
       .header__search
         input(type='text', placeholder='Поиск')
   .chats-container(id='chats')
@@ -25,7 +28,7 @@ const template = `.chats-wrapper__left-panel
   != messagesWindow`;
 
 export class ChatsComponent extends Block<ProfileProps> {
-  // chatsList: ChatsListComponent[];
+  chats: Chat[] = [];
 
   constructor(props: ProfileProps) {
     super('div', props)
@@ -37,22 +40,55 @@ export class ChatsComponent extends Block<ProfileProps> {
   }
 
   private initChildren() {
-    this.children.chatsList = new ChatsListComponent({
-      chats: chatsData,
-      click: this.onChatClick.bind(this)
-    });
-    this.children.messagesWindow = new MessagesWindowComponent({ selectedChat: null, messages: [] });
+    isLogin().then(res => {
+      if (res) {
+        return transport.get('/chats').then(res => JSON.parse(res.data));
+      } else {
+        return false;
+      }
+    }).then(res => {
+      if (res) {
+        this.chats = res.map(chat => {
+          if (chat.avatar) {
+            chat.avatar = avatarUrl + chat.avatar;
+          }
 
-    this.setProps({
-      ...this.props,
-      chatsList: this.children.chatsList,
-      messagesWindow: this.children.messagesWindow
+          return chat;
+        });
+
+        this.children.chatsList = new ChatsListComponent({
+          chats:  this.chats,
+          click: this.onChatClick.bind(this)
+        });
+
+        this.children.messagesWindow = new MessagesWindowComponent({ selectedChat: null, messages: [] });
+
+        this.setProps({
+          ...this.props,
+          chatsList: this.children.chatsList,
+          messagesWindow: this.children.messagesWindow
+        });
+      } else {
+        window.location = '/';
+      }
     });
+
+    // this.children.chatsList = new ChatsListComponent({
+    //   chats: chatsData,
+    //   click: this.onChatClick.bind(this)
+    // });
+    // this.children.messagesWindow = new MessagesWindowComponent({ selectedChat: null, messages: [] });
+    //
+    // this.setProps({
+    //   ...this.props,
+    //   chatsList: this.children.chatsList,
+    //   messagesWindow: this.children.messagesWindow
+    // });
   }
 
   private onChatClick(id: number) {
     this.children.messagesWindow.setProps({
-      selectedChat: chatsData.find(chat => chat.id === id),
+      selectedChat: this.chats.find(chat => chat.id === id),
       messages: messagesData
     });
   }

@@ -5,32 +5,33 @@ interface ChatsListProps {
   click: (id: number) => void;
 }
 
-interface Chat {
+export interface Chat {
   id: number;
-  name: string;
-  msg: string;
-  time: string;
-  count?: string
-  isSentMessage?: boolean;
-  classForRoot?: string;
-  events?: object;
+  last_message: string | null;
+  title: string;
+  unread_count: number;
+  created_by: number;
+  avatar: string;
 }
 
 const template = `each chat in chats
   .chat-wrapper(data-id=chat.id)
+    if chat.avatar
+      img(class='avatar', id='imgPlug', src=chat.avatar)
+    else
       .img-plug
-      .msg-info
-          .info
-              p.name #{chat.name}
-              span.time #{chat.time}
-          div.msg
-              p.msg__text
-                  if isSentMessage
-                      span Вы: 
-                  span.main #{chat.msg}
-              if count > 0
-                  .count
-                      div #{chat.count}`;
+    .msg-info
+        .info
+            p.name #{chat.title}
+            span.time #{chat.time}
+        div.msg
+            p.msg__text
+                if isSentMessage
+                    span Вы: 
+                span.main #{chat.msg}
+            if count > 0
+                .count
+                    div #{chat.count}`;
 
 export class ChatsListComponent extends Block<ChatsListProps> {
   constructor(props: ChatsListProps) {

@@ -1,8 +1,9 @@
 import { Block } from '../../../components/block';
-import { ChatModel, MessageModel } from '../mock-data';
+import { MessageModel } from '../mock-data';
+import { Chat } from '../chats-list/chats-list.component';
 
 interface MessagesWindowProps {
-  selectedChat: ChatModel;
+  selectedChat: Chat;
   messages: MessageModel[];
 }
 
@@ -10,8 +11,11 @@ const template = `if selectedChat
   .main-content-wrapper
     .header
       .header-wrapper
-        .img-plug
-        span.user-name #{selectedChat.name}
+        if selectedChat.avatar
+          img(class='avatar', id='imgPlug', src=selectedChat.avatar)
+        else
+          .img-plug
+        span.user-name #{selectedChat.title}
         .options-icon
     .messages-wrapper
       .messages-container
