@@ -23,11 +23,17 @@
         padding: 15px 0;
         border-bottom: 1px solid $light-border;
 
-        &__profile-link {
-          margin-left: auto;
+        &__profile-links {
+          font-size: 12px;
+          display: flex;
+
+          .add-chat {
+            color: $disabled-text;
+            cursor: pointer;
+          }
 
           a {
-            font-size: 12px;
+            margin-left: auto;
             color: $disabled-text;
             text-decoration: none;
           }

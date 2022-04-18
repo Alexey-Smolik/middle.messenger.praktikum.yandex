@@ -3,13 +3,16 @@ import './chats.component.scss';
 import { messagesData } from './mock-data';
 import {Chat, ChatsListComponent} from './chats-list/chats-list.component';
 import { MessagesWindowComponent } from './messages-window/messages-window.component';
-import {HTTPTransport} from "../../services/request.service";
-import {isLogin} from "../../services/auth.service";
+import { HTTPTransport} from "../../services/request.service";
+import { isLogin } from "../../services/auth.service";
+import { CreateChatComponent } from './create-chat/create-chat.component';
 
 interface ProfileProps {
   chatsList?: ChatsListComponent;
   messagesWindow?: MessagesWindowComponent;
-  classForRoot: string;
+  classForRoot?: string;
+  showChatCreationWindow?: boolean;
+  createChatWindow?: CreateChatComponent;
 }
 
 const transport = new HTTPTransport();
@@ -18,14 +21,17 @@ const avatarUrl = 'https://ya-praktikum.tech/api/v2/resources';
 const template = `.chats-wrapper__left-panel
   .header-container
     .header
-      .header__profile-link
+      .header__profile-links
+        .add-chat(id='addChat') + Add chat
         a(href='/settings') Профиль >
       .header__search
         input(type='text', placeholder='Поиск')
   .chats-container(id='chats')
     != chatsList
 .chats-wrapper__right-panel
-  != messagesWindow`;
+  != messagesWindow
+if showChatCreationWindow
+  != createChatWindow`;
 
 export class ChatsComponent extends Block<ProfileProps> {
   chats: Chat[] = [];
@@ -68,22 +74,12 @@ export class ChatsComponent extends Block<ProfileProps> {
           chatsList: this.children.chatsList,
           messagesWindow: this.children.messagesWindow
         });
+
+        this.initComponentEvents();
       } else {
         window.location = '/';
       }
     });
-
-    // this.children.chatsList = new ChatsListComponent({
-    //   chats: chatsData,
-    //   click: this.onChatClick.bind(this)
-    // });
-    // this.children.messagesWindow = new MessagesWindowComponent({ selectedChat: null, messages: [] });
-    //
-    // this.setProps({
-    //   ...this.props,
-    //   chatsList: this.children.chatsList,
-    //   messagesWindow: this.children.messagesWindow
-    // });
   }
 
   private onChatClick(id: number) {
@@ -91,5 +87,35 @@ export class ChatsComponent extends Block<ProfileProps> {
       selectedChat: this.chats.find(chat => chat.id === id),
       messages: messagesData
     });
+  }
+
+  private initComponentEvents() {
+    const content = this.getContent();
+
+    content.querySelector('#addChat')?.addEventListener('click', () => {
+      this.children.createChatWindow = new CreateChatComponent({
+        classForRoot: 'create-chat-wrapper',
+        closeWindow: (withUpdate: boolean) => {
+          this.onCreateChatWindowClose(withUpdate);
+        }
+      });
+
+      this.setProps({
+        showChatCreationWindow: true,
+        createChatWindow: this.children.createChatWindow
+      });
+    });
+  }
+
+  private onCreateChatWindowClose(withUpdate: boolean) {
+    this.setProps({
+      showChatCreationWindow: false
+    });
+
+    if (withUpdate) {
+      this.initChildren();
+    } else {
+      this.initComponentEvents();
+    }
   }
 }

@@ -1,4 +1,5 @@
-import {Block, Event} from '../block';
+import { Block, Event } from '../block';
+import './form-field.component.scss';
 
 export interface FormFieldProps {
   id?: string;

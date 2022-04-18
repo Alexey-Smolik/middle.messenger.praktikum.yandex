@@ -1,8 +1,8 @@
 import {Block, Event} from '../../components/block';
-import './profile.component.scss';
+  import './profile.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
 import { HTTPTransport } from '../../services/request.service';
-import {LoaderComponent} from "../../components/loader/loader.component";
+import { LoaderComponent } from "../../components/loader/loader.component";
 
 interface ProfileProps {
   emailField?: FormFieldComponent;
@@ -262,6 +262,7 @@ export class ProfileComponent extends Block<ProfileProps> {
         data: formData
       }).then(res => {
         this.setProps({ avatar: avatarUrl + JSON.parse(res.data).avatar });
+        this.initComponentEvents();
       });
     });
   }

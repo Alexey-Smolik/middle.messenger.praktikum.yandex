@@ -1,7 +1,7 @@
 import { Block, Event } from '../../components/block';
 import './registration.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
-import {HTTPTransport} from "../../services/request.service";
+import { HTTPTransport } from "../../services/request.service";
 
 interface RegistrationProps {
   emailField?: FormFieldComponent;
@@ -83,8 +83,8 @@ export class RegistrationComponent extends Block<RegistrationProps> {
             password: this.registrationFieldsValues.passwordFieldValue,
             phone: this.registrationFieldsValues.phoneFieldValue
           }
-        }).then(res => {
-          console.log(res);
+        }).then(() => {
+          window.location = '/messenger';
         }).catch(err => {
           console.log(JSON.parse(err.data));
         });

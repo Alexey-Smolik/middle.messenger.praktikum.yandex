@@ -11,7 +11,6 @@
 - `npm install` — установка стабильной версии
 - `npm run start` — запуск проекта
 - `npm run build` — сборка проекта
-- `npm run build` — сборка проекта
 - `npm run lint` — проверка валидности ts файлов
 - `npm stylelint` — проверка валидности scss файлов
 

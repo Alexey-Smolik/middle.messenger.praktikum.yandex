@@ -87,6 +87,7 @@
         .field {
           display: flex;
           padding-bottom: 9px;
+          margin-bottom: 0;
 
           &:not(:last-child) {
             border-bottom: 1px solid $light-border;
