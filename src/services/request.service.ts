@@ -90,6 +90,7 @@ export class HTTPTransport {
     private request = (url: string, options= { }, timeout = 5000) => {
         const { headers = defaultHeaders, data, method } = options;
 
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();

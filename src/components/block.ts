@@ -5,7 +5,7 @@ import * as pug from 'pug';
 export interface Event {
   name: string;
   fieldId?: string;
-  callback: (event?: any) => void;
+  callback: (event?: never) => void;
 }
 
 export class Block<TProps> {
@@ -98,7 +98,7 @@ export class Block<TProps> {
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidUpdate(oldProps: TProps, newProps: TProps) {
+  componentDidUpdate() {
     return true;
   }
 
@@ -153,7 +153,7 @@ export class Block<TProps> {
     const events: Event[] = this.props?.events || [];
 
     events.forEach(event => {
-      (event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element).addEventListener(event.name, event.callback);
+      (event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element)?.addEventListener(event.name, event.callback);
     });
   }
 
@@ -162,7 +162,7 @@ export class Block<TProps> {
     const events: Event[] = this.props?.events || [];
 
     events.forEach(event => {
-      (event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element).removeEventListener(event.name, event.callback);
+      (event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element)?.removeEventListener(event.name, event.callback);
     });
   }
 

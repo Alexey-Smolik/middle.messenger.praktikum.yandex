@@ -1,7 +1,7 @@
 import { Block } from '../../components/block';
 import './chats.component.scss';
 import { messagesData } from './mock-data';
-import {Chat, ChatsListComponent} from './chats-list/chats-list.component';
+import { Chat, ChatsListComponent } from './chats-list/chats-list.component';
 import { MessagesWindowComponent } from './messages-window/messages-window.component';
 import { HTTPTransport} from "../../services/request.service";
 import { isLogin } from "../../services/auth.service";
@@ -67,12 +67,16 @@ export class ChatsComponent extends Block<ProfileProps> {
           click: this.onChatClick.bind(this)
         });
 
-        this.children.messagesWindow = new MessagesWindowComponent({ selectedChat: null, messages: [] });
+        this.children.messagesWindow = new MessagesWindowComponent({
+          selectedChat: null,
+          messages: [],
+          showOptionsWindow: false
+        });
 
         this.setProps({
           ...this.props,
           chatsList: this.children.chatsList,
-          messagesWindow: this.children.messagesWindow
+          messagesWindow: this.children.messagesWindow,
         });
 
         this.initComponentEvents();
@@ -85,7 +89,25 @@ export class ChatsComponent extends Block<ProfileProps> {
   private onChatClick(id: number) {
     this.children.messagesWindow.setProps({
       selectedChat: this.chats.find(chat => chat.id === id),
-      messages: messagesData
+      messages: messagesData,
+      showOptionsWindow: false,
+      updateData: (chatId?: number, avatar?: string) => {
+        if (Number.isInteger(chatId)) {
+          this.children.chatsList.setProps({
+            chats: this.children.chatsList.props.chats.map(chat => {
+              if (chat.id === chatId) {
+                chat.avatar = avatar;
+              }
+
+              return chat;
+            })
+          });
+
+          this.children.chatsList.initComponentEvents();
+        } else {
+          this.initChildren();
+        }
+      }
     });
   }
 

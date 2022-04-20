@@ -15,7 +15,7 @@ const template = `.modal-window
     .modal-window__wrapper
         .header Создать чат
         .main-content
-            form(id=chatFrom)
+            form
                 != chatNameField
         .footer
             button(id='createButton' class='create-chat primary-btn', type='button') Создать

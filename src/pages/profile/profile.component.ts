@@ -49,7 +49,7 @@ const template = `.profile-wrapper__left-panel(id='leftPanel')
           img(class='avatar', id='imgPlug', src=avatar)
         else
           .img-plug(id='imgPlug')
-        input(type='file' id='avatarInput', accept='image/x-png,image/gif,image/jpeg')
+        input(type='file' id='avatar-input', accept='image/x-png,image/gif,image/jpeg')
         p Алексей
       .main-content
         form(id='profileForm', class='form')
@@ -402,8 +402,9 @@ export class ProfileComponent extends Block<ProfileProps> {
         name: 'input',
         fieldId: field.props.id || '',
         callback: event =>
-            (this.props.isProfileEdit ? this.profileFieldsValues : this.passwordFieldsValues)
-            [`${field.props.name}FieldValue`] = event.target.value
+            (
+                this.props.isProfileEdit ? this.profileFieldsValues : this.passwordFieldsValues
+            )[`${field.props.name}FieldValue`] = event.target.value
       }]
     };
   }

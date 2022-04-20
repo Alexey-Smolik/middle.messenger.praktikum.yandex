@@ -1,12 +1,14 @@
 @import 'src/styles/variables';
 
-.create-chat-wrapper {
-  min-width: 400px;
-  position: fixed;
+.confirm-window-wrapper {
+  min-width: 710px;
+  position: absolute;
   background-color: $modal-window-background;
   display: flex;
   align-items: center;
   justify-content: center;
+  top: 0;
+  left: 0;
 
   .modal-window {
     width: 340px;
@@ -23,6 +25,10 @@
       .header {
         text-align: center;
         margin-bottom: 30px;
+      }
+
+      .main-content .confirm-text {
+        font-size: 13px;
       }
 
       .footer {

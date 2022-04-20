@@ -23,7 +23,7 @@ if wrapField
     input(type=type, id=id, name=name, value=fieldValue, disabled=disabled)
     if showErrorText
       p(id=validationFieldId, class='error-text') #{errorText}
-else 
+else
   input(type=type, id=id, name=name, value=fieldValue, disabled=disabled)
   if showErrorText
     p(id=validationFieldId, class='error-text') #{errorText}`;

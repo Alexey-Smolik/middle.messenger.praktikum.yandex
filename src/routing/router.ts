@@ -20,7 +20,7 @@ export class Router {
         Router.__instance = this;
     }
 
-    use(pathname: string, block, props: any) {
+    use(pathname: string, block, props: never) {
         const route = new Route(pathname, block, props,{ rootQuery: this._rootQuery });
         this.routes.push(route);
         return this;
@@ -43,7 +43,6 @@ export class Router {
 
         this._currentRoute = route;
         route?.render();
-        // route.render(route, pathname);
     }
 
     go(pathname: string) {

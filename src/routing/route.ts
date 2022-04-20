@@ -1,11 +1,11 @@
 export class Route {
     private _pathname: string;
-    private _blockClass: any;
+    private _blockClass: never;
     private _block: null;
-    private _props: any;
-    private _params: any;
+    private _props: never;
+    private _params: never;
 
-    constructor(pathname: string, view: any, params: any, props: any) {
+    constructor(pathname: string, view: never, params: never, props: never) {
         this._pathname = pathname;
         this._blockClass = view;
         this._block = null;
@@ -45,7 +45,7 @@ function isEqual(lhs: string, rhs: string) {
     return lhs === rhs;
 }
 
-function render(query: string, block: any) {
+function render(query: string, block: never) {
     const root = document.querySelector(query);
     root?.appendChild(block.getContent());
 

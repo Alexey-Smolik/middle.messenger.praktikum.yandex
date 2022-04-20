@@ -1,4 +1,5 @@
 import { Block } from '../../../components/block';
+import './chat-list.component.scss';
 
 interface ChatsListProps {
   chats: Chat[];
@@ -43,19 +44,12 @@ export class ChatsListComponent extends Block<ChatsListProps> {
     return this.compile(template, this.props);
   }
 
-  private initComponentEvents() {
+  initComponentEvents() {
     Array.from(this.getContent().getElementsByClassName('chat-wrapper')).forEach(chat => {
       chat.addEventListener('click', () => {
         this.props.click(+chat.dataset.id);
       });
     });
-
-    // console.log();
-    //
-    // this.getContent().querySelector('.chat-wrapper').addEventListener('click', event => {
-    //   console.log(event);
-    //   this.props.click(1);
-    // });
   }
 }
 
