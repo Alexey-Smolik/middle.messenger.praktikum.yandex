@@ -1,15 +1,13 @@
 import './create-chat.component.scss';
 import { Block, Event } from '../../../components/block';
 import { FormFieldComponent } from '../../../components/form-field/form-field.component';
-import { HTTPTransport } from '../../../services/request.service';
+import { ChatsService } from '../../../services/api/chats.service';
 
 interface CreateChatProps {
     classForRoot?: string;
     chatNameField?: FormFieldComponent;
     closeWindow?: (withUpdate: boolean) => void;
 }
-
-const transport = new HTTPTransport();
 
 const template = `.modal-window
     .modal-window__wrapper
@@ -22,6 +20,7 @@ const template = `.modal-window
             span(id='cancelButton', class='cancel') Отменить`;
 
 export class CreateChatComponent extends Block<CreateChatProps> {
+    chatsService = new ChatsService();
     chatNameField: FormFieldComponent;
     chatNameFieldValue = '';
 
@@ -43,11 +42,7 @@ export class CreateChatComponent extends Block<CreateChatProps> {
 
         content.querySelector('#createButton')?.addEventListener('click', () => {
             if (this.validateField()) {
-                transport.post('/chats', {
-                    data: {
-                        title: this.chatNameFieldValue
-                    }
-                }).then(() => {
+                this.chatsService.createChat(this.chatNameFieldValue).then(() => {
                     this.props.closeWindow(true);
                 }).catch(err => console.log(err));
             }

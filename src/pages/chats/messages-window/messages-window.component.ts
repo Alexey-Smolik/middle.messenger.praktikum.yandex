@@ -4,7 +4,7 @@ import { Chat } from '../chats-list/chats-list.component';
 import './messages-window.component.scss';
 import { AddUserComponent } from '../add-user/add-user.component';
 import { ConfirmWindowComponent } from '../../../components/confirm-window/confirm-window.component';
-import { HTTPTransport } from '../../../services/request.service';
+import { ChatsService } from '../../../services/api/chats.service';
 
 interface MessagesWindowProps {
   selectedChat?: Chat | null;
@@ -17,7 +17,6 @@ interface MessagesWindowProps {
   updateData?: (chatId?: number, avatar?: string) => void;
 }
 
-const transport = new HTTPTransport();
 const avatarUrl = 'https://ya-praktikum.tech/api/v2/resources';
 
 const template = `if selectedChat
@@ -32,7 +31,7 @@ const template = `if selectedChat
             .img-plug(id='image')
           input(type='file' id='avatar-input', accept='image/x-png,image/gif,image/jpeg')
           span.user-name #{selectedChat.title}
-          .options-icon(id='options-icon')
+          .options-icon(id='options-icon', class={active: showOptionsWindow})
           if showOptionsWindow
             .options-wrapper(id='options-popup')
               .item(id='addUser')
@@ -63,6 +62,11 @@ if showConfirmWindow
 
 export class MessagesWindowComponent extends Block<MessagesWindowProps> {
   isChatSelected = false;
+  token = '';
+  init = false;
+  chatsService = new ChatsService();
+  // ws: WebSocket;
+
 
   constructor(props: MessagesWindowProps) {
     super('section', props);
@@ -78,8 +82,21 @@ export class MessagesWindowComponent extends Block<MessagesWindowProps> {
   }
 
   initComponentEvents() {
+    if (this.props.selectedChat) {
+      if (this.token || this.init) {
+
+      } else {
+        this.init = true;
+
+        this.chatsService.getChatToken(this.props.selectedChat.id).then(res => {
+          this.token = JSON.parse(res.data).token.token;
+          this.init = false;
+        });
+      }
+    }
+
     const content = this.getContent();
-    const avatarInput = content.querySelector('#avatarInput');
+    const avatarInput = content.querySelector('#avatar-input');
 
     content.querySelector('#image')?.addEventListener('click', () => avatarInput?.click());
 
@@ -96,10 +113,7 @@ export class MessagesWindowComponent extends Block<MessagesWindowProps> {
       formData.append('avatar', avatarInput.files[0]);
       formData.append('chatId', `${this.props.selectedChat?.id}`);
 
-      transport.put('/chats/avatar', {
-        headers: { 'content-type': 'multipart/form-data' },
-        data: formData
-      }).then(res => {
+      this.chatsService.uploadChatAvatar(formData).then(res => {
         const data = JSON.parse(res.data);
 
         this.setProps({ selectedChat: { ...data, avatar: avatarUrl + data.avatar } });
@@ -162,11 +176,9 @@ export class MessagesWindowComponent extends Block<MessagesWindowProps> {
           confirmBtnText: 'Удалить',
           cancelBtnText: 'Отменить',
           promiseForAccept: () => {
-            return transport.delete('/chats', {
-              data: {
-                chatId: this.props.selectedChat?.id
-              }
-            }).then(res => res.ok).catch(() => false);
+            return this.chatsService.deleteChatById(this.props.selectedChat?.id)
+                .then(res => res.ok)
+                .catch(() => false);
           },
           closeWindow: (withUpdate) => {
             this.onConfirmWindowClose(withUpdate);
@@ -197,5 +209,9 @@ export class MessagesWindowComponent extends Block<MessagesWindowProps> {
       this.props.updateData();
     }
   }
+
+  // private initWebSocket() {
+  //   this.ws = new WebSocketService(`wss://ya-praktikum.tech/ws/chats/${}/<CHAT_ID>/<TOKEN_VALUE>`);
+  // }
 }
 

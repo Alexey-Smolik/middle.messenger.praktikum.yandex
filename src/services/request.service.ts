@@ -58,20 +58,26 @@ const METHODS = {
 };
 
 export class HTTPTransport {
-    get = (url, options = {}) => {
-        return this.request(url + (options.data ? queryStringify(options.data) : ''), {...options, method: METHODS.GET}, options.timeout);
+    fullUrl = '';
+
+    constructor(apiUrl: string) {
+        this.fullUrl += apiUrl;
+    }
+
+    get = (url: string, options = {}) => {
+        return this.request(this.fullUrl + url + (options.data ? queryStringify(options.data) : ''), {...options, method: METHODS.GET}, options.timeout);
     };
 
-    post = (url, options = {}) => {
-        return this.request(url, {...options, method: METHODS.POST}, options.timeout);
+    post = (url: string, options = {}) => {
+        return this.request(this.fullUrl + url, {...options, method: METHODS.POST}, options.timeout);
     };
 
-    put = (url, options = {}) => {
-        return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
+    put = (url: string, options = {}) => {
+        return this.request(this.fullUrl + url, {...options, method: METHODS.PUT}, options.timeout);
     };
 
-    delete = (url, options = {}) => {
-        return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
+    delete = (url: string, options = {}) => {
+        return this.request(this.fullUrl + url, {...options, method: METHODS.DELETE}, options.timeout);
     };
 
     private getXHRHTTPRequestResult = (

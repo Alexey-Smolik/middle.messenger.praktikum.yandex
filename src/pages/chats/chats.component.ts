@@ -3,9 +3,9 @@ import './chats.component.scss';
 import { messagesData } from './mock-data';
 import { Chat, ChatsListComponent } from './chats-list/chats-list.component';
 import { MessagesWindowComponent } from './messages-window/messages-window.component';
-import { HTTPTransport} from "../../services/request.service";
-import { isLogin } from "../../services/auth.service";
 import { CreateChatComponent } from './create-chat/create-chat.component';
+import { ChatsService } from '../../services/api/chats.service';
+import { AuthService } from '../../services/api/auth.service';
 
 interface ProfileProps {
   chatsList?: ChatsListComponent;
@@ -15,15 +15,14 @@ interface ProfileProps {
   createChatWindow?: CreateChatComponent;
 }
 
-const transport = new HTTPTransport();
 const avatarUrl = 'https://ya-praktikum.tech/api/v2/resources';
 
 const template = `.chats-wrapper__left-panel
   .header-container
     .header
       .header__profile-links
-        .add-chat(id='addChat') + Add chat
-        a(href='/settings') Профиль >
+        .add-chat(id='addChat', class='action') + Add chat
+        a(href='/settings', class='action') Профиль >
       .header__search
         input(type='text', placeholder='Поиск')
   .chats-container(id='chats')
@@ -34,6 +33,8 @@ if showChatCreationWindow
   != createChatWindow`;
 
 export class ChatsComponent extends Block<ProfileProps> {
+  chatsService = new ChatsService();
+  authService = new AuthService();
   chats: Chat[] = [];
 
   constructor(props: ProfileProps) {
@@ -46,9 +47,9 @@ export class ChatsComponent extends Block<ProfileProps> {
   }
 
   private initChildren() {
-    isLogin().then(res => {
+    this.authService.getUserInfo().then(res => {
       if (res) {
-        return transport.get('/chats').then(res => JSON.parse(res.data));
+        return this.chatsService.getChats().then(res => JSON.parse(res.data));
       } else {
         return false;
       }
@@ -83,7 +84,7 @@ export class ChatsComponent extends Block<ProfileProps> {
       } else {
         window.location = '/';
       }
-    });
+    }).catch(() => window.location = '/');
   }
 
   private onChatClick(id: number) {

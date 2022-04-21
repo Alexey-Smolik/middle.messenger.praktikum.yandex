@@ -38,6 +38,10 @@
             color: $disabled-text;
             text-decoration: none;
           }
+
+          .action:hover {
+            color: $black
+          }
         }
 
         &__search {

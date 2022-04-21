@@ -1,8 +1,9 @@
 import {Block, Event} from '../../components/block';
   import './profile.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
-import { HTTPTransport } from '../../services/request.service';
 import { LoaderComponent } from "../../components/loader/loader.component";
+import { AuthService } from '../../services/api/auth.service';
+import { ChangePasswordData, UserData, UsersService } from '../../services/api/users.service';
 
 interface ProfileProps {
   emailField?: FormFieldComponent;
@@ -79,6 +80,8 @@ const template = `.profile-wrapper__left-panel(id='leftPanel')
 const avatarUrl = 'https://ya-praktikum.tech/api/v2/resources';
 
 export class ProfileComponent extends Block<ProfileProps> {
+  authService = new AuthService();
+  usersService = new UsersService();
   fields: ProfileFields;
   passwordFields: PasswordFields;
 
@@ -98,7 +101,6 @@ export class ProfileComponent extends Block<ProfileProps> {
   }
 
   avatarLink = '';
-  transport = new HTTPTransport();
 
   get saveBtnContainer() {
     return this.getContent().querySelector('#saveBtnContainer');
@@ -130,7 +132,7 @@ export class ProfileComponent extends Block<ProfileProps> {
     });
 
     content.querySelector('#logoutLink')?.addEventListener('click', () => {
-      this.transport.post('/auth/logout').then(res => {
+      this.authService.logout().then(res => {
         if (res.ok) {
           window.location = '/';
         }
@@ -212,12 +214,12 @@ export class ProfileComponent extends Block<ProfileProps> {
         if (Object.keys(this.passwordFields).map(
             key => this.validateField(this.passwordFields[key])
         ).every(validation => validation)) {
-          this.transport.put('/user/password', {
-            data: {
+          const data: ChangePasswordData = {
               oldPassword: this.passwordFieldsValues.oldPasswordFieldValue,
               newPassword: this.passwordFieldsValues.newPasswordFieldValue
-            }
-          }).then(() => {
+          }
+
+          this.usersService.changeUserPassword(data).then(() => {
             this.setProps({ isPasswordEdit: false });
             this.initComponentEvents();
           });
@@ -226,16 +228,16 @@ export class ProfileComponent extends Block<ProfileProps> {
         if (Object.keys(this.fields).map(
             key => this.validateField(this.fields[key])
         ).every(validation => validation)) {
-          this.transport.put('/user/profile', {
-            data: {
+          const data: UserData = {
               first_name: this.profileFieldsValues.firstNameFieldValue,
               second_name: this.profileFieldsValues.secondNameFieldValue,
               display_name: this.profileFieldsValues.displayNameFieldValue,
               login: this.profileFieldsValues.loginFieldValue,
               email: this.profileFieldsValues.emailFieldValue,
               phone: this.profileFieldsValues.phoneFieldValue,
-            }
-          }).then(() => {
+          }
+
+          this.usersService.changeUserData(data).then(() => {
             Object.keys(this.fields).forEach(key => {
               this.fields[key].setProps({ disabled: true });
             });
@@ -247,7 +249,7 @@ export class ProfileComponent extends Block<ProfileProps> {
       }
     });
 
-    const avatarInput = content.querySelector('#avatarInput');
+    const avatarInput = content.querySelector('#avatar-input');
 
     content.querySelector('#imgPlug')?.addEventListener('click', () => avatarInput.click());
 
@@ -255,12 +257,7 @@ export class ProfileComponent extends Block<ProfileProps> {
       const formData = new FormData();
       formData.append('avatar', avatarInput.files[0]);
 
-      this.transport.put('/user/profile/avatar', {
-        headers: {
-          'content-type': 'multipart/form-data'
-        },
-        data: formData
-      }).then(res => {
+      this.usersService.changeUserAvatar(formData).then(res => {
         this.setProps({ avatar: avatarUrl + JSON.parse(res.data).avatar });
         this.initComponentEvents();
       });
@@ -268,7 +265,7 @@ export class ProfileComponent extends Block<ProfileProps> {
   }
 
   private initChildren() {
-    this.transport.get('/auth/user').then(res => {
+    this.authService.getUserInfo().then(res => {
       const data = JSON.parse(res.data);
 
       this.fields = {

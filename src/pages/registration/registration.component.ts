@@ -1,7 +1,7 @@
 import { Block, Event } from '../../components/block';
 import './registration.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
-import { HTTPTransport } from "../../services/request.service";
+import { AuthService, SignUpData } from '../../services/api/auth.service';
 
 interface RegistrationProps {
   emailField?: FormFieldComponent;
@@ -31,6 +31,8 @@ const template = `.registration-wrapper__main-container
     a(href='/') Войти`;
 
 export class RegistrationComponent extends Block<RegistrationProps> {
+  authService = new AuthService();
+
   emailField: FormFieldComponent;
   loginField: FormFieldComponent;
   firstNameField: FormFieldComponent;
@@ -49,8 +51,6 @@ export class RegistrationComponent extends Block<RegistrationProps> {
     password2FieldValue: '',
   };
 
-  transport = new HTTPTransport();
-
   constructor(props: RegistrationProps) {
     super('div', props)
     this.initChildren();
@@ -62,7 +62,7 @@ export class RegistrationComponent extends Block<RegistrationProps> {
   }
 
   private initComponentEvents() {
-    this.getContent().querySelector('#registerButton').addEventListener('click', () => {
+    this.getContent().querySelector('#registerButton')?.addEventListener('click', () => {
       if ([
         this.emailField,
         this.loginField,
@@ -74,16 +74,16 @@ export class RegistrationComponent extends Block<RegistrationProps> {
       ].map(
           field => this.validateField(field)
       ).every(validation => validation)) {
-        this.transport.post('/auth/signup', {
-          data: {
+        const data: SignUpData = {
             first_name: this.registrationFieldsValues.firstNameFieldValue,
             second_name: this.registrationFieldsValues.secondNameFieldValue,
             login: this.registrationFieldsValues.loginFieldValue,
             email: this.registrationFieldsValues.emailFieldValue,
             password: this.registrationFieldsValues.passwordFieldValue,
             phone: this.registrationFieldsValues.phoneFieldValue
-          }
-        }).then(() => {
+        }
+
+        this.authService.signUp(data).then(() => {
           window.location = '/messenger';
         }).catch(err => {
           console.log(JSON.parse(err.data));

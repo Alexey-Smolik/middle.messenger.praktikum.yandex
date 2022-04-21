@@ -1,7 +1,8 @@
 import './add-user.component.scss';
 import { Block, Event } from '../../../components/block';
 import { FormFieldComponent } from '../../../components/form-field/form-field.component';
-import { HTTPTransport } from '../../../services/request.service';
+import { UsersService } from '../../../services/api/users.service';
+import { AddDeleteChatUsersParams, ChatsService } from '../../../services/api/chats.service';
 
 interface AddUserProps {
     classForRoot?: string;
@@ -11,8 +12,6 @@ interface AddUserProps {
     closeWindow?: () => void;
     errorText?: string;
 }
-
-const transport = new HTTPTransport();
 
 const template = `.modal-window
     .modal-window__wrapper
@@ -35,6 +34,8 @@ const template = `.modal-window
 export class AddUserComponent extends Block<AddUserProps> {
     loginField: FormFieldComponent;
     loginFieldValue = '';
+    usersService = new UsersService();
+    chatsService = new ChatsService();
 
     constructor(props: AddUserProps) {
         super('section', props);
@@ -54,27 +55,16 @@ export class AddUserComponent extends Block<AddUserProps> {
 
         content.querySelector('#addButton')?.addEventListener('click', () => {
             if (this.validateField()) {
-                transport.post('/user/search', {
-                    data: { login: this.loginFieldValue }
-                }).then(res => {
+                this.usersService.searchUsersByLogin(this.loginFieldValue).then(res => {
                     const user = JSON.parse(res.data)[0];
 
                     if (user) {
-                        if (this.props.deleteMode) {
-                            return transport.delete('/chats/users', {
-                                data: {
-                                    users: [user.id],
-                                    chatId: this.props.chatId
-                                }
-                            })
+                        const data: AddDeleteChatUsersParams = {
+                            chatId: this.props.chatId as number,
+                            users: [user.id]
                         }
 
-                        return transport.put('/chats/users', {
-                            data: {
-                                users: [user.id],
-                                chatId: this.props.chatId
-                            }
-                        });
+                        return this.props.deleteMode ? this.chatsService.deleteUsersFromChat(data) : this.chatsService.addUsersToChat(data);
                     }
 
                     return null;

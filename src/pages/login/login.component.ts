@@ -1,9 +1,8 @@
 import {Block, Event} from '../../components/block';
 import './login.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
-import { HTTPTransport } from '../../services/request.service';
-import { isLogin } from '../../services/auth.service';
 import { LoaderComponent } from '../../components/loader/loader.component';
+import { AuthService, SigninData } from '../../services/api/auth.service';
 
 interface LoginProps {
   loginField?: FormFieldComponent;
@@ -28,6 +27,7 @@ else
       a(href='/sign-up') Нет аккаунта?`;
 
 export class LoginComponent extends Block<LoginProps> {
+  authService = new AuthService();
   loginField: FormFieldComponent;
   passwordField: FormFieldComponent;
 
@@ -36,8 +36,6 @@ export class LoginComponent extends Block<LoginProps> {
     passwordFieldValue: ''
   };
 
-  transport = new HTTPTransport();
-
   constructor(props: LoginProps) {
     super('div', {
       ...props,
@@ -45,7 +43,7 @@ export class LoginComponent extends Block<LoginProps> {
       isLoading: true
     });
 
-    this.initChildren();
+    this.prepareInitChildren();
   }
 
   render() {
@@ -53,71 +51,75 @@ export class LoginComponent extends Block<LoginProps> {
   }
 
   private initComponentEvents() {
-    this.getContent().querySelector('#loginButton').addEventListener('click', () => {
+    this.getContent().querySelector('#loginButton')?.addEventListener('click', () => {
       if ([this.loginField, this.passwordField].map(
         field => this.validateField(field)
       ).every(validation => validation)) {
-        this.transport.post('/auth/signin', {
-          data: {
+        const data: SigninData = {
             login: this.loginFieldsValues.loginFieldValue,
             password: this.loginFieldsValues.passwordFieldValue
-          }
-        }).then(() => {
+        }
+
+        this.authService.signIn(data).then(() => {
           window.location = '/messenger';
         });
       }
     });
   }
 
-  private initChildren() {
-    isLogin().then(res => {
+  private prepareInitChildren() {
+    this.authService.getUserInfo().then(res => {
       if (res) {
         window.location = '/messenger';
       } else {
-        this.loginField = new FormFieldComponent({
-          id: 'login',
-          name: 'login',
-          type: 'text',
-          validationFieldId: 'loginError',
-          labelText: 'Логин',
-          errorText: 'Неверный логин',
-          regexp: /(?=.*[a-zA-Z-_])[a-zA-z0-9-_]{3,20}$/,
-          classForRoot: 'field',
-          fieldValue: '',
-          showErrorText: false,
-        });
-
-        this.loginField.setProps(this.getFieldEvents(this.loginField));
-
-        this.passwordField = new FormFieldComponent({
-          id: 'password',
-          name: 'password',
-          type: 'password',
-          validationFieldId: 'passwordError',
-          labelText: 'Пароль',
-          errorText: 'Неверный пароль',
-          regexp: /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,40}$/,
-          classForRoot: 'field',
-          fieldValue: '',
-          showErrorText: false,
-        });
-
-        this.passwordField.setProps(this.getFieldEvents(this.passwordField));
-
-        this.children.loginField = this.loginField;
-        this.children.passwordField = this.passwordField;
-        delete this.children.loader;
-
-        this.setProps({
-          isLoading: false,
-          loader: null,
-          loginField: this.children.loginField,
-          passwordField: this.children.passwordField
-        });
-
-        this.initComponentEvents();
+        this.initChildren();
       }
+    }).catch(() => this.initChildren());
+  }
+
+  private initChildren() {
+    this.loginField = new FormFieldComponent({
+      id: 'login',
+      name: 'login',
+      type: 'text',
+      validationFieldId: 'loginError',
+      labelText: 'Логин',
+      errorText: 'Неверный логин',
+      regexp: /(?=.*[a-zA-Z-_])[a-zA-z0-9-_]{3,20}$/,
+      classForRoot: 'field',
+      fieldValue: '',
+      showErrorText: false,
     });
+
+    this.loginField.setProps(this.getFieldEvents(this.loginField));
+
+    this.passwordField = new FormFieldComponent({
+      id: 'password',
+      name: 'password',
+      type: 'password',
+      validationFieldId: 'passwordError',
+      labelText: 'Пароль',
+      errorText: 'Неверный пароль',
+      regexp: /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,40}$/,
+      classForRoot: 'field',
+      fieldValue: '',
+      showErrorText: false,
+    });
+
+    this.passwordField.setProps(this.getFieldEvents(this.passwordField));
+
+    this.children.loginField = this.loginField;
+    this.children.passwordField = this.passwordField;
+    delete this.children.loader;
+
+    this.setProps({
+      isLoading: false,
+      loader: null,
+      loginField: this.children.loginField,
+      passwordField: this.children.passwordField
+    });
+
+    this.initComponentEvents();
   }
 
   private getFieldEvents(field: FormFieldComponent): { events: Event[] } {
