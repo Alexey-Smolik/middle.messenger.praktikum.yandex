@@ -1,14 +1,20 @@
 import { Block } from '../../../components/block';
-import { MessageModel } from '../mock-data';
-import { Chat } from '../chats-list/chats-list.component';
 import './messages-window.component.scss';
 import { AddUserComponent } from '../add-user/add-user.component';
 import { ConfirmWindowComponent } from '../../../components/confirm-window/confirm-window.component';
 import { ChatsService } from '../../../services/api/chats.service';
+import store from '../../../services/store.service';
+import { WebSocketService } from '../../../services/websocket.service';
+import { Message } from '../../../types/message.type';
+import { Chat } from '../../../types/chat.type';
+
+interface ChatMessage extends Message {
+  isSentMessage: boolean;
+}
 
 interface MessagesWindowProps {
   selectedChat?: Chat | null;
-  messages?: MessageModel[];
+  messages?: ChatMessage[];
   showOptionsWindow?: boolean;
   showAddUserWindow?: boolean;
   addUserWindow?: AddUserComponent;
@@ -43,13 +49,13 @@ const template = `if selectedChat
               .item(id='removeChat')
                 .icon.remove
                 span Удалить чат
-    .messages-wrapper
+    .messages-wrapper(id='messages')
       .messages-container
         each message in messages
-          .message(class=message.isSentMessage ? 'sent-msg' : 'received-msg') #{message.text}
-            span.message-time #{message.date.getHours()}:#{message.date.getMinutes()}
+          .message(class=message.isSentMessage ? 'sent-msg' : 'received-msg') #{message.content}
+            span.message-time #{message.time}
     .footer-panel
-      form
+      .footer
         .attachments-icon
         input.message-input(id='messageInput' type='text', placeholder='Сообщение', name='message')
         .send-icon.disabled(id='sendIcon')
@@ -63,18 +69,18 @@ if showConfirmWindow
 export class MessagesWindowComponent extends Block<MessagesWindowProps> {
   isChatSelected = false;
   token = '';
-  init = false;
   chatsService = new ChatsService();
-  // ws: WebSocket;
-
+  selectedChatId: number;
+  webSocketService: WebSocketService;
+  messageText = '';
 
   constructor(props: MessagesWindowProps) {
     super('section', props);
+    this.initComponentEvents();
   }
 
   _render() {
     super._render();
-    this.initComponentEvents();
   }
 
   render() {
@@ -82,29 +88,47 @@ export class MessagesWindowComponent extends Block<MessagesWindowProps> {
   }
 
   initComponentEvents() {
+    const content = this.getContent();
+    const avatarInput = content.querySelector('#avatar-input');
+    const sendIcon = content.querySelector('#sendIcon');
+
+    if (this.selectedChatId !== this.props.selectedChat?.id) {
+      this.token = '';
+    }
+
     if (this.props.selectedChat) {
-      if (this.token || this.init) {
+      this.selectedChatId = this.props.selectedChat.id;
 
-      } else {
-        this.init = true;
+      const messagesEl = content.querySelector('#messages');
+      messagesEl.scrollTop = messagesEl?.scrollHeight;
 
+      if (!this.token) {
         this.chatsService.getChatToken(this.props.selectedChat.id).then(res => {
-          this.token = JSON.parse(res.data).token.token;
-          this.init = false;
+          this.token = JSON.parse(res.data).token;
+          this.initWebSocket();
         });
       }
     }
 
-    const content = this.getContent();
-    const avatarInput = content.querySelector('#avatar-input');
-
     content.querySelector('#image')?.addEventListener('click', () => avatarInput?.click());
 
     content.querySelector('#messageInput')?.addEventListener('input', event => {
-      if (event.target.value) {
-        content.querySelector('#sendIcon')?.classList.remove('disabled');
+      this.messageText = event.target.value;
+
+      if (this.messageText) {
+        sendIcon?.classList.remove('disabled');
       } else {
-        content.querySelector('#sendIcon')?.classList.add('disabled');
+        sendIcon?.classList.add('disabled');
+      }
+    });
+
+    sendIcon?.addEventListener('click', () => {
+      this.sendMessage();
+    });
+
+    content.querySelector('#messageInput')?.addEventListener('keyup', event => {
+      if (event.keyCode === 13 && this.messageText) {
+        this.sendMessage();
       }
     });
 
@@ -210,8 +234,44 @@ export class MessagesWindowComponent extends Block<MessagesWindowProps> {
     }
   }
 
-  // private initWebSocket() {
-  //   this.ws = new WebSocketService(`wss://ya-praktikum.tech/ws/chats/${}/<CHAT_ID>/<TOKEN_VALUE>`);
-  // }
+  private initWebSocket() {
+    const currentUser = store.getState()?.user;
+
+    if (currentUser && this.token && Number.isInteger(this.props.selectedChat?.id)) {
+       this.webSocketService = new WebSocketService(
+          `wss://ya-praktikum.tech/ws/chats/${currentUser.id}/${this.props.selectedChat.id}/${this.token}`, this
+      );
+    }
+  }
+
+  initMessages() {
+    this.webSocketService.getOldMessages();
+  }
+
+  setMessages(data: Message[]) {
+    this.setProps({ messages: data.map(msg => ({
+        ...msg,
+        isSentMessage: msg.user_id === store.getState().user.id,
+        time: `${new Date(msg.time).getHours()}:${new Date(msg.time).getMinutes()}`
+    }))});
+
+    this.initComponentEvents();
+  }
+
+  setNewMessage(message: Message) {
+    this.setProps({
+      messages: [...this.props.messages,
+      {
+        ...message,
+        isSentMessage: message.user_id === store.getState().user.id,
+        time: `${new Date(message.time).getHours()}:${new Date(message.time).getMinutes()}`
+      }] });
+
+    this.initComponentEvents();
+  }
+
+  private sendMessage() {
+    this.webSocketService.sendMessage(this.messageText);
+  }
 }
 

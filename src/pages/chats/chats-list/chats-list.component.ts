@@ -1,18 +1,10 @@
 import { Block } from '../../../components/block';
 import './chat-list.component.scss';
+import { Chat } from '../../../types/chat.type';
 
 interface ChatsListProps {
   chats: Chat[];
   click: (id: number) => void;
-}
-
-export interface Chat {
-  id: number;
-  last_message: string | null;
-  title: string;
-  unread_count: number;
-  created_by: number;
-  avatar: string;
 }
 
 const template = `each chat in chats
@@ -22,17 +14,21 @@ const template = `each chat in chats
     else
       .img-plug
     .msg-info
-        .info
+        if chat.last_message
+          .info
             p.name #{chat.title}
-            span.time #{chat.time}
-        div.msg
-            p.msg__text
-                if isSentMessage
-                    span Вы: 
-                span.main #{chat.msg}
-            if count > 0
-                .count
-                    div #{chat.count}`;
+            span.time #{chat.last_message.time}
+          div.msg
+              p.msg__text
+                  if isSentMessage
+                      span Вы: 
+                  span.main #{chat.last_message.content}
+              if count > 0
+                  .count
+                      div #{chat.unread_count}
+        else
+          .info
+            p.name #{chat.title}`;
 
 export class ChatsListComponent extends Block<ChatsListProps> {
   constructor(props: ChatsListProps) {

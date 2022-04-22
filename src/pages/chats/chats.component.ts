@@ -1,11 +1,12 @@
 import { Block } from '../../components/block';
 import './chats.component.scss';
-import { messagesData } from './mock-data';
-import { Chat, ChatsListComponent } from './chats-list/chats-list.component';
+import { ChatsListComponent } from './chats-list/chats-list.component';
 import { MessagesWindowComponent } from './messages-window/messages-window.component';
 import { CreateChatComponent } from './create-chat/create-chat.component';
 import { ChatsService } from '../../services/api/chats.service';
 import { AuthService } from '../../services/api/auth.service';
+import store from '../../services/store.service';
+import { Chat } from '../../types/chat.type';
 
 interface ProfileProps {
   chatsList?: ChatsListComponent;
@@ -16,6 +17,8 @@ interface ProfileProps {
 }
 
 const avatarUrl = 'https://ya-praktikum.tech/api/v2/resources';
+const months = ['янв', 'фев', 'мар', 'апр', 'мая', 'июня', 'июля', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
 const template = `.chats-wrapper__left-panel
   .header-container
@@ -36,6 +39,8 @@ export class ChatsComponent extends Block<ProfileProps> {
   chatsService = new ChatsService();
   authService = new AuthService();
   chats: Chat[] = [];
+  currDate: Date = new Date();
+  selectedChatId: number;
 
   constructor(props: ProfileProps) {
     super('div', props)
@@ -49,6 +54,8 @@ export class ChatsComponent extends Block<ProfileProps> {
   private initChildren() {
     this.authService.getUserInfo().then(res => {
       if (res) {
+        store.set('user', JSON.parse(res.data));
+
         return this.chatsService.getChats().then(res => JSON.parse(res.data));
       } else {
         return false;
@@ -64,7 +71,7 @@ export class ChatsComponent extends Block<ProfileProps> {
         });
 
         this.children.chatsList = new ChatsListComponent({
-          chats:  this.chats,
+          chats: this.chats.map(chat => this.convertChartDate(chat)),
           click: this.onChatClick.bind(this)
         });
 
@@ -88,28 +95,33 @@ export class ChatsComponent extends Block<ProfileProps> {
   }
 
   private onChatClick(id: number) {
-    this.children.messagesWindow.setProps({
-      selectedChat: this.chats.find(chat => chat.id === id),
-      messages: messagesData,
-      showOptionsWindow: false,
-      updateData: (chatId?: number, avatar?: string) => {
-        if (Number.isInteger(chatId)) {
-          this.children.chatsList.setProps({
-            chats: this.children.chatsList.props.chats.map(chat => {
-              if (chat.id === chatId) {
-                chat.avatar = avatar;
-              }
+    if (this.selectedChatId !== id) {
+      this.selectedChatId = id;
 
-              return chat;
-            })
-          });
+      this.children.messagesWindow.setProps({
+        selectedChat: this.chats.find(chat => chat.id === id),
+        showOptionsWindow: false,
+        updateData: (chatId?: number, avatar?: string) => {
+          if (Number.isInteger(chatId)) {
+            this.children.chatsList.setProps({
+              chats: this.children.chatsList.props.chats.map(chat => {
+                if (chat.id === chatId) {
+                  chat.avatar = avatar;
+                }
 
-          this.children.chatsList.initComponentEvents();
-        } else {
-          this.initChildren();
+                return chat;
+              })
+            });
+
+            this.children.chatsList.initComponentEvents();
+          } else {
+            this.initChildren();
+          }
         }
-      }
-    });
+      });
+
+      this.children.messagesWindow.initComponentEvents();
+    }
   }
 
   private initComponentEvents() {
@@ -140,5 +152,25 @@ export class ChatsComponent extends Block<ProfileProps> {
     } else {
       this.initComponentEvents();
     }
+  }
+
+  private convertChartDate(chat: Chat): Chat {
+    if (chat.last_message) {
+      const time = new Date(chat.last_message.time);
+
+      if (
+          this.currDate.getFullYear() > time.getFullYear() ||
+          this.currDate.getMonth() > time.getMonth() ||
+          (this.currDate.getDate() - 6) > time.getDate()
+      ) {
+        chat.last_message.time = `${time.getDate()} ${months[time.getMonth()]} ${time.getFullYear()}`;
+      } else {
+        chat.last_message.time = time.getDate() === this.currDate.getDate() ?
+            `${time.getHours()}:${time.getMinutes()}` :
+            `${days[time.getDay()]}`;
+      }
+    }
+
+    return chat;
   }
 }

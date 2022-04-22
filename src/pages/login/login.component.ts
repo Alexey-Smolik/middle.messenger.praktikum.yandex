@@ -3,6 +3,7 @@ import './login.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { AuthService, SigninData } from '../../services/api/auth.service';
+import store from '../../services/store.service';
 
 interface LoginProps {
   loginField?: FormFieldComponent;
@@ -70,6 +71,7 @@ export class LoginComponent extends Block<LoginProps> {
   private prepareInitChildren() {
     this.authService.getUserInfo().then(res => {
       if (res) {
+        store.set('user', JSON.parse(res.data));
         window.location = '/messenger';
       } else {
         this.initChildren();
