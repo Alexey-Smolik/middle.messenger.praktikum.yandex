@@ -148,6 +148,7 @@ export class MessagesWindowComponent extends Block<MessagesWindowProps> {
 
     content.querySelector('#options-icon')?.addEventListener('click', () => {
       this.setProps({ showOptionsWindow: !this.props.showOptionsWindow });
+      this.initComponentEvents();
     });
 
     if (this.props.showOptionsWindow) {
@@ -156,6 +157,7 @@ export class MessagesWindowComponent extends Block<MessagesWindowProps> {
           this.setProps({
             showOptionsWindow: false
           });
+          this.initComponentEvents();
         }
       });
 
