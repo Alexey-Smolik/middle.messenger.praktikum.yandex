@@ -3,7 +3,7 @@ import './messages-window.component.scss';
 import { AddUserComponent } from '../add-user/add-user.component';
 import { ConfirmWindowComponent } from '../../../components/confirm-window/confirm-window.component';
 import { ChatsService } from '../../../services/api/chats.service';
-import store from '../../../services/store.service';
+import store from '../../../services/store/store.service';
 import { WebSocketService } from '../../../services/websocket.service';
 import { Message } from '../../../types/message.type';
 import { Chat } from '../../../types/chat.type';

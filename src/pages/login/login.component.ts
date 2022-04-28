@@ -3,7 +3,7 @@ import './login.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { AuthService, SigninData } from '../../services/api/auth.service';
-import store from '../../services/store.service';
+import store from '../../services/store/store.service';
 
 interface LoginProps {
   loginField?: FormFieldComponent;

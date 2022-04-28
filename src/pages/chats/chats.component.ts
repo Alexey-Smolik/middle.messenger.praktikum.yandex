@@ -5,7 +5,7 @@ import { MessagesWindowComponent } from './messages-window/messages-window.compo
 import { CreateChatComponent } from './create-chat/create-chat.component';
 import { ChatsService } from '../../services/api/chats.service';
 import { AuthService } from '../../services/api/auth.service';
-import store from '../../services/store.service';
+import store from '../../services/store/store.service';
 import { Chat } from '../../types/chat.type';
 
 interface ProfileProps {
