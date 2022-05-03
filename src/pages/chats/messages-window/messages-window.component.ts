@@ -74,13 +74,9 @@ export class MessagesWindowComponent extends Block<MessagesWindowProps> {
   webSocketService: WebSocketService;
   messageText = '';
 
-  constructor(props: MessagesWindowProps) {
+  constructor(props) {
     super('section', props);
     this.initComponentEvents();
-  }
-
-  _render() {
-    super._render();
   }
 
   render() {
@@ -152,15 +148,6 @@ export class MessagesWindowComponent extends Block<MessagesWindowProps> {
     });
 
     if (this.props.showOptionsWindow) {
-      document.addEventListener('click', event => {
-        if (!([...event.target.classList].includes('options-icon') && this.props.showOptionsWindow)){
-          this.setProps({
-            showOptionsWindow: false
-          });
-          this.initComponentEvents();
-        }
-      });
-
       content.querySelector('#addUser')?.addEventListener('click', () => {
         this.children.addUserWindow = new AddUserComponent({
           classForRoot: 'add-user-wrapper',

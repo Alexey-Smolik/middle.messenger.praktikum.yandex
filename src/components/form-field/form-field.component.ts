@@ -29,7 +29,7 @@ else
     p(id=validationFieldId, class='error-text') #{errorText}`;
 
 export class FormFieldComponent extends Block<FormFieldProps> {
-  constructor(props: FormFieldProps) {
+  constructor(props) {
     super('div', props);
   }
 

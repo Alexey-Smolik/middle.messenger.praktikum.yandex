@@ -1,3 +1,5 @@
+import { render } from '../utils/render';
+
 export class Route {
     private _pathname: string;
     private _blockClass: never;
@@ -43,11 +45,4 @@ export class Route {
 
 function isEqual(lhs: string, rhs: string) {
     return lhs === rhs;
-}
-
-function render(query: string, block: never) {
-    const root = document.querySelector(query);
-    root?.appendChild(block.getContent());
-
-    return root;
 }

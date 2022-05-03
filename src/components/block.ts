@@ -153,7 +153,9 @@ export class Block<TProps> {
     const events: Event[] = this.props?.events || [];
 
     events.forEach(event => {
-      (event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element)?.addEventListener(event.name, event.callback);
+      const el = event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element;
+
+      el?.addEventListener(event.name, event.callback);
     });
   }
 
@@ -162,7 +164,9 @@ export class Block<TProps> {
     const events: Event[] = this.props?.events || [];
 
     events.forEach(event => {
-      (event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element)?.removeEventListener(event.name, event.callback);
+      const el = event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element;
+
+      el?.removeEventListener(event.name, event.callback);
     });
   }
 

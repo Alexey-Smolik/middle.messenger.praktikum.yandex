@@ -2,6 +2,7 @@ import { Block, Event } from '../../components/block';
 import './registration.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
 import { AuthService, SignUpData } from '../../services/api/auth.service';
+import router from "../../../index";
 
 interface RegistrationProps {
   emailField?: FormFieldComponent;
@@ -51,7 +52,7 @@ export class RegistrationComponent extends Block<RegistrationProps> {
     password2FieldValue: '',
   };
 
-  constructor(props: RegistrationProps) {
+  constructor(props) {
     super('div', props)
     this.initChildren();
     this.initComponentEvents();
@@ -84,7 +85,7 @@ export class RegistrationComponent extends Block<RegistrationProps> {
         }
 
         this.authService.signUp(data).then(() => {
-          window.location = '/messenger';
+          router.go('/messenger');
         }).catch(err => {
           console.log(JSON.parse(err.data));
         });

@@ -31,7 +31,7 @@ const template = `each chat in chats
             p.name #{chat.title}`;
 
 export class ChatsListComponent extends Block<ChatsListProps> {
-  constructor(props: ChatsListProps) {
+  constructor(props) {
     super('section', props);
     this.initComponentEvents();
   }

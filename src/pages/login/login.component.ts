@@ -4,6 +4,7 @@ import { FormFieldComponent } from '../../components/form-field/form-field.compo
 import { LoaderComponent } from '../../components/loader/loader.component';
 import { AuthService, SigninData } from '../../services/api/auth.service';
 import store from '../../services/store/store.service';
+import router from "../../../index";
 
 interface LoginProps {
   loginField?: FormFieldComponent;
@@ -37,7 +38,7 @@ export class LoginComponent extends Block<LoginProps> {
     passwordFieldValue: ''
   };
 
-  constructor(props: LoginProps) {
+  constructor(props) {
     super('div', {
       ...props,
       loader: new LoaderComponent({ classForRoot: 'loading' }),
@@ -62,7 +63,7 @@ export class LoginComponent extends Block<LoginProps> {
         }
 
         this.authService.signIn(data).then(() => {
-          window.location = '/messenger';
+          router.go('/messenger');
         });
       }
     });
@@ -72,7 +73,7 @@ export class LoginComponent extends Block<LoginProps> {
     this.authService.getUserInfo().then(res => {
       if (res) {
         store.set('user', JSON.parse(res.data));
-        window.location = '/messenger';
+        router.go('/messenger');
       } else {
         this.initChildren();
       }

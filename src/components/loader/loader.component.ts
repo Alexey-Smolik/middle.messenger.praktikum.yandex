@@ -8,7 +8,7 @@ export interface LoaderProps {
 const template = `.loader`;
 
 export class LoaderComponent extends Block<LoaderProps> {
-    constructor(props: LoaderProps) {
+    constructor(props) {
         super('div', props);
     }
 

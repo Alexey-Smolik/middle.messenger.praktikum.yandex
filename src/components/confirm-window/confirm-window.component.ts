@@ -24,7 +24,7 @@ const template = `.modal-window
             span(id='cancelButton', class='cancel') #{cancelBtnText}`;
 
 export class ConfirmWindowComponent extends Block<ConfirmWindowProps> {
-    constructor(props: ConfirmWindowProps) {
+    constructor(props) {
         super('section', props);
         this.initComponentEvents();
     }

@@ -17,15 +17,15 @@ export interface ChangePasswordData {
 }
 
 export class UsersService {
-    changeUserData(data: UserData) {
-        return usersAPIInstance.put('/profile', { data });
+    changeUserData(data: UserData): Promise<UserData> {
+        return usersAPIInstance.put('/profile', { data }) as Promise<UserData>;
     }
 
-    changeUserAvatar(formData: FormData) {
+    changeUserAvatar(formData: FormData): Promise<UserData> {
         return usersAPIInstance.put('/profile/avatar', {
             headers: { 'content-type': 'multipart/form-data' },
             data: formData 
-        });
+        }) as Promise<UserData>;
     }
 
     changeUserPassword(data: ChangePasswordData) {
@@ -36,7 +36,7 @@ export class UsersService {
         return usersAPIInstance.get(`/${userId}`);
     }
 
-    searchUsersByLogin(login: string) {
-        return usersAPIInstance.post(`/search`, { data: { login } });
+    searchUsersByLogin(login: string): Promise<never> {
+        return usersAPIInstance.post(`/search`, { data: { login } }) as Promise<never>;
     }
 }

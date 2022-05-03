@@ -7,6 +7,7 @@ import { ChatsService } from '../../services/api/chats.service';
 import { AuthService } from '../../services/api/auth.service';
 import store from '../../services/store/store.service';
 import { Chat } from '../../types/chat.type';
+import router from "../../../index";
 
 interface ProfileProps {
   chatsList?: ChatsListComponent;
@@ -42,7 +43,7 @@ export class ChatsComponent extends Block<ProfileProps> {
   currDate: Date = new Date();
   selectedChatId: number;
 
-  constructor(props: ProfileProps) {
+  constructor(props) {
     super('div', props)
     this.initChildren();
   }
@@ -89,9 +90,9 @@ export class ChatsComponent extends Block<ProfileProps> {
 
         this.initComponentEvents();
       } else {
-        window.location = '/';
+        router.go('/');
       }
-    }).catch(() => window.location = '/');
+    }).catch(() => router.go('/'));
   }
 
   private onChatClick(id: number) {

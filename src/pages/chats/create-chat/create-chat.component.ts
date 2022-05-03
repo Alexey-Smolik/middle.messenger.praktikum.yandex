@@ -24,7 +24,7 @@ export class CreateChatComponent extends Block<CreateChatProps> {
     chatNameField: FormFieldComponent;
     chatNameFieldValue = '';
 
-    constructor(props: CreateChatProps) {
+    constructor(props) {
         super('section', props);
         this.initChildren();
     }

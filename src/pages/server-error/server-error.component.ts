@@ -12,7 +12,7 @@ const template = `.server-error-wrapper__main-container
     a(href='#') Назад к чатам`;
 
 export class ServerErrorComponent extends Block<ServerErrorProps> {
-  constructor(props: ServerErrorProps) {
+  constructor(props) {
     super('div', props)
   }
 

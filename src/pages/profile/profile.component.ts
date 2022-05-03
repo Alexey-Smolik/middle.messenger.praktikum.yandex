@@ -4,6 +4,7 @@ import { FormFieldComponent } from '../../components/form-field/form-field.compo
 import { LoaderComponent } from "../../components/loader/loader.component";
 import { AuthService } from '../../services/api/auth.service';
 import { ChangePasswordData, UserData, UsersService } from '../../services/api/users.service';
+import router from "../../../index";
 
 interface ProfileProps {
   emailField?: FormFieldComponent;
@@ -110,7 +111,7 @@ export class ProfileComponent extends Block<ProfileProps> {
     return this.getContent().querySelector('#footer');
   }
 
-  constructor(props: ProfileProps) {
+  constructor(props) {
     super('div', {
       ...props,
       loader: new LoaderComponent({ classForRoot: 'loading' }),
@@ -128,13 +129,13 @@ export class ProfileComponent extends Block<ProfileProps> {
     const content = this.getContent();
 
     content.querySelector('#leftPanel')?.addEventListener('click', () => {
-      window.location = '/messenger';
+      router.go('/messenger');
     });
 
     content.querySelector('#logoutLink')?.addEventListener('click', () => {
       this.authService.logout().then(res => {
         if (res.ok) {
-          window.location = '/';
+          router.go('/');
         }
       });
     });

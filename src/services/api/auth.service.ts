@@ -1,4 +1,5 @@
 import { HTTPTransport } from '../request.service';
+import { UserData } from './users.service';
 
 const authAPIInstance = new HTTPTransport('/auth');
 
@@ -11,31 +12,29 @@ export interface SignUpData {
     phone: string
 }
 
-export interface SigninData {
+export interface SignInData {
     login: string,
     password: string
 }
 
-export class AuthService {
-    signUp(data: SignUpData) {
-        return authAPIInstance.post('/signup', { data });
-    }
-
-    signIn(data: SigninData) {
-        return authAPIInstance.post('/signin', { data });
-    }
-
-    getUserInfo() {
-        return authAPIInstance.get('/user');
-    }
-    
-    logout() {
-        return authAPIInstance.post('/logout');
-    }
+interface SignUpRes {
+    id: number;
 }
 
-// return transport.get('/auth/user').then(() => {
-//     return true;
-// }).catch(() => {
-//     return false;
-// });
+export class AuthService {
+    signUp(data: SignUpData): Promise<SignUpRes> {
+        return authAPIInstance.post('/signup', { data }) as Promise<SignUpRes>;
+    }
+
+    signIn(data: SignInData): Promise<never> {
+        return authAPIInstance.post('/signin', { data }) as Promise<never>;
+    }
+
+    getUserInfo(): Promise<UserData> {
+        return authAPIInstance.get('/user') as Promise<UserData>;
+    }
+    
+    logout(): Promise<never> {
+        return authAPIInstance.post('/logout') as Promise<never>;
+    }
+}

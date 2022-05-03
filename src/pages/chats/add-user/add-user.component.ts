@@ -29,7 +29,7 @@ const template = `.modal-window
                 button(id='addButton' class='primary-btn', type='button') Удалить
             else
                 button(id='addButton' class='primary-btn', type='button') Добавить
-            span(id='cancelButton', class='cancel') Отменить`;
+            span(id='cancelButton', class='footer__cancel') Отменить`;
 
 export class AddUserComponent extends Block<AddUserProps> {
     loginField: FormFieldComponent;
@@ -37,7 +37,7 @@ export class AddUserComponent extends Block<AddUserProps> {
     usersService = new UsersService();
     chatsService = new ChatsService();
 
-    constructor(props: AddUserProps) {
+    constructor(props) {
         super('section', props);
         this.initChildren();
     }
@@ -82,7 +82,7 @@ export class AddUserComponent extends Block<AddUserProps> {
     }
 
     private initChildren() {
-       this.loginField = new FormFieldComponent({
+        this.loginField = new FormFieldComponent({
             id: 'login',
             name: 'login',
             type: 'text',
