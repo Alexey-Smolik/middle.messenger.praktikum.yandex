@@ -5,7 +5,7 @@ import * as pug from 'pug';
 export interface Event {
   name: string;
   fieldId?: string;
-  callback: (event?: any) => void;
+  callback: (event?: never) => void;
 }
 
 export class Block<TProps> {
@@ -98,7 +98,7 @@ export class Block<TProps> {
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidUpdate(oldProps: TProps, newProps: TProps) {
+  componentDidUpdate() {
     return true;
   }
 
@@ -153,7 +153,9 @@ export class Block<TProps> {
     const events: Event[] = this.props?.events || [];
 
     events.forEach(event => {
-      (event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element).addEventListener(event.name, event.callback);
+      const el = event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element;
+
+      el?.addEventListener(event.name, event.callback);
     });
   }
 
@@ -162,7 +164,9 @@ export class Block<TProps> {
     const events: Event[] = this.props?.events || [];
 
     events.forEach(event => {
-      (event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element).removeEventListener(event.name, event.callback);
+      const el = event.fieldId ? this._element.querySelector(`#${event.fieldId}`) : this._element;
+
+      el?.removeEventListener(event.name, event.callback);
     });
   }
 
@@ -180,7 +184,9 @@ export class Block<TProps> {
     Object.values(this.children).forEach(child => {
       const stub = fragment.content.querySelector(`[data-id='${child._id}']`);
 
-      stub.replaceWith(child.getContent());
+      if (stub) {
+        stub.replaceWith(child.getContent());
+      }
     });
 
     return fragment.content;

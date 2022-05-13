@@ -1,0 +1,19 @@
+@import 'src/styles/variables';
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+label {
+  color: $disabled-text;
+  font-size: 9px;
+}
+
+input {
+  border: 0;
+  border-bottom: 1px solid $blue;
+  outline: 0;
+  font-size: 13px;
+}

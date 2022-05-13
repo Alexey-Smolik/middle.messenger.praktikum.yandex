@@ -1,39 +1,37 @@
 import { Block } from '../../../components/block';
+import './chat-list.component.scss';
+import { Chat } from '../../../types/chat.type';
 
 interface ChatsListProps {
   chats: Chat[];
   click: (id: number) => void;
 }
 
-interface Chat {
-  id: number;
-  name: string;
-  msg: string;
-  time: string;
-  count?: string
-  isSentMessage?: boolean;
-  classForRoot?: string;
-  events?: object;
-}
-
 const template = `each chat in chats
   .chat-wrapper(data-id=chat.id)
+    if chat.avatar
+      img(class='avatar', id='imgPlug', src=chat.avatar)
+    else
       .img-plug
-      .msg-info
+    .msg-info
+        if chat.last_message
           .info
-              p.name #{chat.name}
-              span.time #{chat.time}
+            p.name #{chat.title}
+            span.time #{chat.last_message.time}
           div.msg
               p.msg__text
                   if isSentMessage
                       span Вы: 
-                  span.main #{chat.msg}
+                  span.main #{chat.last_message.content}
               if count > 0
                   .count
-                      div #{chat.count}`;
+                      div #{chat.unread_count}
+        else
+          .info
+            p.name #{chat.title}`;
 
 export class ChatsListComponent extends Block<ChatsListProps> {
-  constructor(props: ChatsListProps) {
+  constructor(props) {
     super('section', props);
     this.initComponentEvents();
   }
@@ -42,19 +40,12 @@ export class ChatsListComponent extends Block<ChatsListProps> {
     return this.compile(template, this.props);
   }
 
-  private initComponentEvents() {
+  initComponentEvents() {
     Array.from(this.getContent().getElementsByClassName('chat-wrapper')).forEach(chat => {
       chat.addEventListener('click', () => {
         this.props.click(+chat.dataset.id);
       });
     });
-
-    // console.log();
-    //
-    // this.getContent().querySelector('.chat-wrapper').addEventListener('click', event => {
-    //   console.log(event);
-    //   this.props.click(1);
-    // });
   }
 }
 

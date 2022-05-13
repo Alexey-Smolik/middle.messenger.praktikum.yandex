@@ -1,0 +1,253 @@
+@import 'src/styles/variables';
+
+.plug {
+  font-size: 12px;
+  font-weight: 500;
+  color: $disabled-text;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section {
+  height: 100%;
+  width: 100%;
+
+  .main-content-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+      padding: 10px 20px 0;
+
+      .header-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-bottom: 1px solid $light-border;
+        padding-bottom: 10px;
+        position: relative;
+
+        .chat-wrapper {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          #avatar-input {
+            display: none;
+          }
+
+          .user-name {
+            font-size: 13px;
+            font-weight: 600;
+          }
+
+          #image {
+            background: $light-grey;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+
+            &:hover::before {
+              content: '';
+              background: url('../../../static/svg/edit.svg') no-repeat; // TODO: change icon to camera
+              width: 22px;
+              height: 22px;
+              position: absolute;
+              top: 6px;
+              left: 6px;
+            }
+          }
+
+          .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+          }
+
+          .options-icon {
+            height: 25px;
+            width: 25px;
+            background: url('../../../static/svg/options.svg') no-repeat center;
+            margin-left: auto;
+            cursor: pointer;
+
+            &:hover, &.active {
+              background: url('../../../static/svg/options.svg') no-repeat center, $blue-background;
+              border-radius: 50%;
+            }
+          }
+        }
+
+        .options-wrapper {
+          position: absolute;
+          right: 0;
+          z-index: 1;
+          background: #fff;
+          top: 60px;
+          box-shadow: 0 0 10px $popup-shadow;
+          border-radius: 12px;
+          white-space: nowrap;
+          cursor: initial;
+          display: flex;
+          flex-direction: column;
+
+          .item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            padding: 10px 15px;
+
+            &:first-child {
+              border-radius: 12px 12px 0 0;
+            }
+
+            &:last-child {
+              border-radius: 0 0 12px 12px;
+            }
+
+            &:hover {
+              background-color: $blue-background;
+            }
+
+            .icon {
+              width: 22px;
+              height: 22px;
+
+              &.add {
+                background: url('../../../static/svg/add.svg') no-repeat;
+              }
+
+              &.remove {
+                background: url('../../../static/svg/remove.svg') no-repeat;
+              }
+            }
+
+            span {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+
+    .messages-wrapper {
+      overflow: auto;
+      padding: 30px 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .messages-container {
+        padding: 0 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: auto;
+
+        .message {
+          min-width: 40px;
+          padding: 11px 11px 16px;
+          font-weight: 500;
+          font-size: 12px;
+          max-width: 400px;
+          line-height: 15px;
+          position: relative;
+
+          .message-time {
+            position: absolute;
+            right: 10px;
+            bottom: 3px;
+            font-weight: 500;
+            font-size: 9px;
+          }
+
+          &.sent-msg {
+            background-color: $blue-background;
+            border-radius: 10px 10px 0;
+            margin-left: auto;
+
+            .message-time {
+              color: $blue;
+            }
+          }
+
+          &.received-msg {
+            background-color: $grey-background;
+            border-radius: 0 10px 10px;
+            margin-right: auto;
+
+            .message-time {
+              color: $disabled-text;
+            }
+          }
+        }
+
+        .sent-message-wrapper {
+          margin-left: auto;
+        }
+
+        .received-message-wrapper {
+          display: flex;
+        }
+      }
+    }
+
+    .footer-panel {
+      padding: 0 20px 11px;
+      margin-top: auto;
+
+      .footer {
+        padding-top: 11px;
+        border-top: 1px solid $light-border;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .attachments-icon {
+          height: 32px;
+          width: 32px;
+          background: url('../../../static/svg/clip.svg') no-repeat;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .message-input {
+          flex: 1;
+          width: 100%;
+          height: 32px;
+          border-radius: 16px;
+          border: 0;
+          background-color: $light-grey;
+          background-repeat: no-repeat;
+          font-size: 12px;
+          padding: 10px;
+        }
+
+        .send-icon {
+          height: 28px;
+          width: 28px;
+          background: url('../../../static/svg/arrow.svg') no-repeat;
+          transform: rotate(180deg);
+
+          &.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+          }
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

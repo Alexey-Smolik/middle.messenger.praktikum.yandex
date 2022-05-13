@@ -4,6 +4,7 @@
   display: flex;
   height: 100%;
   min-width: 700px;
+
   &__left-panel {
     min-width: 310px;
     width: 310px;
@@ -23,13 +24,23 @@
         padding: 15px 0;
         border-bottom: 1px solid $light-border;
 
-        &__profile-link {
-          margin-left: auto;
+        &__profile-links {
+          font-size: 12px;
+          display: flex;
+
+          .add-chat {
+            color: $disabled-text;
+            cursor: pointer;
+          }
 
           a {
-            font-size: 12px;
+            margin-left: auto;
             color: $disabled-text;
             text-decoration: none;
+          }
+
+          .action:hover {
+            color: $black
           }
         }
 
@@ -41,10 +52,7 @@
             height: 32px;
             border-radius: 5px;
             border: 0;
-            background-color: $light-grey;
-            background-image: url('../../static/svg/search-icon.svg');
-            background-repeat: no-repeat;
-            background-position: 10px center;
+            background: $light-grey url('../../static/svg/search-icon.svg') no-repeat 10px center;
             padding-left: 30px;
 
             &::placeholder {
@@ -55,98 +63,6 @@
         }
       }
     }
-
-    .chats-container {
-      overflow: auto;
-
-      .chat-wrapper {
-          display: flex;
-          gap: 10px;
-          padding: 10px 10px;
-          border-bottom: 1px solid $light-border;
-
-          &:hover {
-            background-color: $hover-background;
-            cursor: pointer;
-          }
-
-          .img-plug {
-            background: $light-grey;
-            width: 47px;
-            height: 47px;
-            border-radius: 25px;
-          }
-
-          .msg-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-
-            .info {
-              display: flex;
-              align-items: center;
-              gap: 20px;
-
-              .name {
-                font-size: 13px;
-                font-weight: 600;
-                margin-bottom: 4px;
-                flex: 1;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 180px;
-                white-space: nowrap;
-              }
-
-              .time {
-                margin-left: auto;
-                font-weight: 500;
-                font-size: 9px;
-                color: $disabled-text;
-              }
-            }
-
-            .msg {
-              flex: 1;
-              display: flex;
-
-              .msg__text {
-                width: 85%;
-                font-size: 12px;
-                font-weight: 500;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                text-overflow: ellipsis;
-
-                .main {
-                  color: $disabled-text;
-                }
-              }
-
-              .count {
-                min-width: 20px;
-                height: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 11px;
-                background: $blue;
-                border-radius: 10px;
-                color: $white;
-                margin-top: auto;
-                margin-left: auto;
-
-                div {
-                  padding: 5px;
-                }
-              }
-            }
-          }
-    }
-    }
   }
 
   &__right-panel {
@@ -156,170 +72,5 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    .plug {
-      font-size: 12px;
-      font-weight: 500;
-      color: $disabled-text;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    section {
-      height: 100%;
-      width: 100%;
-
-      .main-content-wrapper {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-
-        .header {
-          padding: 10px 20px 0;
-
-          .header-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid $light-border;
-            padding-bottom: 10px;
-
-            .img-plug {
-              background: $light-grey;
-              width: 34px;
-              height: 34px;
-              border-radius: 25px;
-            }
-
-            .user-name {
-              flex: 1;
-            }
-
-            .options-icon {
-              height: 25px;
-              width: 10px;
-              background-image: url('../../static/svg/options.svg');
-              background-repeat: no-repeat;
-              background-position: center;
-
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
-        }
-
-        .messages-wrapper {
-          overflow: auto;
-          padding: 30px 0;
-
-          .messages-container {
-            padding: 0 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-
-            .message {
-              padding: 11px 11px 16px;
-              font-weight: 500;
-              font-size: 12px;
-              max-width: 400px;
-              line-height: 15px;
-              position: relative;
-
-              &.sent-msg {
-                background-color: $blue-background;
-                border-radius: 10px 10px 0;
-                margin-left: auto;
-
-                .message-time {
-                  color: $blue;
-                }
-              }
-
-              &.received-msg {
-                background-color: $grey-background;
-                border-radius: 0 10px 10px;
-                margin-right: auto;
-
-                .message-time {
-                  color: $disabled-text;
-                }
-              }
-
-              .message-time {
-                position: absolute;
-                right: 10px;
-                bottom: 3px;
-                font-weight: 500;
-                font-size: 9px;
-              }
-            }
-
-            .sent-message-wrapper {
-              margin-left: auto;
-            }
-
-            .received-message-wrapper {
-              display: flex;
-            }
-          }
-        }
-
-        .footer-panel {
-          padding: 0 20px 11px;
-          margin-top: auto;
-
-          form {
-            padding-top: 11px;
-            border-top: 1px solid $light-border;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            .attachments-icon {
-              height: 32px;
-              width: 32px;
-              background-image: url('../../static/svg/clip.svg');
-
-              &:hover {
-                cursor: pointer;
-              }
-            }
-
-            .message-input {
-              flex: 1;
-              width: 100%;
-              height: 32px;
-              border-radius: 16px;
-              border: 0;
-              background-color: $light-grey;
-              background-repeat: no-repeat;
-              font-size: 12px;
-              padding: 10px;
-            }
-
-            .send-icon {
-              height: 28px;
-              width: 28px;
-              background-image: url('../../static/svg/arrow.svg');
-              transform: rotate(180deg);
-
-              &.disabled {
-                opacity: 0.5;
-                pointer-events: none;
-              }
-
-              &:hover {
-                cursor: pointer;
-              }
-            }
-          }
-        }
-      }
-    }
   }
 }

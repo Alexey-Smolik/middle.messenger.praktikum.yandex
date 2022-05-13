@@ -1,0 +1,49 @@
+@import 'src/styles/variables';
+
+.confirm-window-wrapper {
+  min-width: 710px;
+  position: absolute;
+  background-color: $modal-window-background;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+
+  .modal-window {
+    width: 340px;
+    height: 260px;
+    background: $white;
+    border-radius: 12px;
+    padding: 40px 30px 20px;
+
+    &__wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .main-content .confirm-text {
+        font-size: 13px;
+      }
+
+      .footer {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .cancel {
+          text-align: center;
+          color: $blue;
+          font-size: 12px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

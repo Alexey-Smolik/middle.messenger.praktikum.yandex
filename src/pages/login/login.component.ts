@@ -1,25 +1,35 @@
 import {Block, Event} from '../../components/block';
 import './login.component.scss';
 import { FormFieldComponent } from '../../components/form-field/form-field.component';
+import { LoaderComponent } from '../../components/loader/loader.component';
+import { AuthService, SigninData } from '../../services/api/auth.service';
+import store from '../../services/store/store.service';
+import router from "../../../index";
 
 interface LoginProps {
   loginField?: FormFieldComponent;
   passwordField?: FormFieldComponent;
-  classForRoot: string;
+  loader?: LoaderComponent | null;
+  classForRoot?: string;
+  isLoading?: boolean;
 }
 
-const template = `.login-wrapper__main-container
-  .wrapper__header
-    p Войти
-  form(id='loginForm', class='form')
-    .fields
-      != loginField
-      != passwordField
-    button(id='loginButton' class='submit-btn primary-btn', type='button') Авторизоваться
-  .login-wrapper__footer
-    a(href='#') Нет аккаунта?`;
+const template = `if isLoading
+  != loader
+else
+  .login-wrapper__main-container
+    .wrapper__header
+      p Войти
+    form(id='loginForm', class='form')
+      .fields
+        != loginField
+        != passwordField
+      button(id='loginButton' class='submit-btn primary-btn', type='button') Авторизоваться
+    .login-wrapper__footer
+      a(href='/sign-up') Нет аккаунта?`;
 
 export class LoginComponent extends Block<LoginProps> {
+  authService = new AuthService();
   loginField: FormFieldComponent;
   passwordField: FormFieldComponent;
 
@@ -28,10 +38,14 @@ export class LoginComponent extends Block<LoginProps> {
     passwordFieldValue: ''
   };
 
-  constructor(props: LoginProps) {
-    super('div', props)
-    this.initChildren();
-    this.initComponentEvents();
+  constructor(props) {
+    super('div', {
+      ...props,
+      loader: new LoaderComponent({ classForRoot: 'loading' }),
+      isLoading: true
+    });
+
+    this.prepareInitChildren();
   }
 
   render() {
@@ -39,13 +53,31 @@ export class LoginComponent extends Block<LoginProps> {
   }
 
   private initComponentEvents() {
-    this.getContent().querySelector('#loginButton').addEventListener('click', () => {
+    this.getContent().querySelector('#loginButton')?.addEventListener('click', () => {
       if ([this.loginField, this.passwordField].map(
         field => this.validateField(field)
       ).every(validation => validation)) {
-        console.log(this.loginFieldsValues);
+        const data: SigninData = {
+            login: this.loginFieldsValues.loginFieldValue,
+            password: this.loginFieldsValues.passwordFieldValue
+        }
+
+        this.authService.signIn(data).then(() => {
+          router.go('/messenger');
+        });
       }
     });
+  }
+
+  private prepareInitChildren() {
+    this.authService.getUserInfo().then(res => {
+      if (res) {
+        store.set('user', JSON.parse(res.data));
+        router.go('/messenger');
+      } else {
+        this.initChildren();
+      }
+    }).catch(() => this.initChildren());
   }
 
   private initChildren() {
@@ -81,12 +113,16 @@ export class LoginComponent extends Block<LoginProps> {
 
     this.children.loginField = this.loginField;
     this.children.passwordField = this.passwordField;
+    delete this.children.loader;
 
     this.setProps({
-      ...this.props,
+      isLoading: false,
+      loader: null,
       loginField: this.children.loginField,
-      passwordField: this.children.passwordField,
-    })
+      passwordField: this.children.passwordField
+    });
+
+    this.initComponentEvents();
   }
 
   private getFieldEvents(field: FormFieldComponent): { events: Event[] } {

@@ -22,7 +22,7 @@
     .icon {
       height: 28px;
       width: 28px;
-      background-image: url('../../static/svg/arrow.svg');
+      background: url('../../static/svg/arrow.svg') no-repeat;
     }
   }
 
@@ -39,10 +39,31 @@
     }
 
     .header {
-      height: 100px;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      margin-bottom: 100px;
+      gap: 20px;
+
+      #avatar-input {
+        display: none;
+      }
+
+      .avatar {
+        height: 130px;
+        width: 130px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .img-plug {
+        height: 130px;
+        width: 130px;
+        border-radius: 50%;
+        background: $light-grey url('../../static/svg/img-plug.svg') no-repeat center;
+        cursor: pointer;
+      }
 
       p {
         font-weight: 500;
@@ -62,7 +83,9 @@
 
         .field {
           display: flex;
+          flex-direction: row;
           padding-bottom: 9px;
+          margin-bottom: 0;
 
           &:not(:last-child) {
             border-bottom: 1px solid $light-border;
@@ -70,6 +93,8 @@
 
           label {
             font-size: 13px;
+            display: flex;
+            align-items: center;
           }
 
           .input {
@@ -105,6 +130,7 @@
           color: $blue;
           font-size: 13px;
           text-decoration: none;
+          cursor: pointer;
         }
 
         &:last-child {
@@ -118,10 +144,6 @@
           border-bottom: 1px solid $light-border;
         }
       }
-    }
-
-    .save-button-container {
-      display: none;
     }
   }
 }

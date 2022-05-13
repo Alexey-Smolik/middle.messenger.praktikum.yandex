@@ -1,4 +1,5 @@
-import {Block, Event} from '../block';
+import { Block, Event } from '../block';
+import './form-field.component.scss';
 
 export interface FormFieldProps {
   id?: string;
@@ -22,13 +23,13 @@ if wrapField
     input(type=type, id=id, name=name, value=fieldValue, disabled=disabled)
     if showErrorText
       p(id=validationFieldId, class='error-text') #{errorText}
-else 
+else
   input(type=type, id=id, name=name, value=fieldValue, disabled=disabled)
   if showErrorText
     p(id=validationFieldId, class='error-text') #{errorText}`;
 
 export class FormFieldComponent extends Block<FormFieldProps> {
-  constructor(props: FormFieldProps) {
+  constructor(props) {
     super('div', props);
   }
 
