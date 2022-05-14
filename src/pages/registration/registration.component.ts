@@ -1,8 +1,8 @@
-import { Block, Event } from '../../components/block';
+import { Block, Event } from '@components/block';
 import './registration.component.scss';
-import { FormFieldComponent } from '../../components/form-field/form-field.component';
-import { AuthService, SignUpData } from '../../services/api/auth.service';
-import router from "../../../index";
+import { FormFieldComponent } from '@components/form-field/form-field.component';
+import { AuthService, SignUpData } from '@api/auth.service';
+import router from '@router';
 
 interface RegistrationProps {
   emailField?: FormFieldComponent;

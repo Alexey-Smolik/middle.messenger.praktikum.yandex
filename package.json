@@ -10,7 +10,8 @@
     "test": "jest",
     "watch": "parcel watch ./src/**/**/**/*.**",
     "lint": "eslint ./src",
-    "stylelint": "npx stylelint '**/*.scss'"
+    "stylelint": "npx stylelint '**/*.scss'",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -50,6 +51,7 @@
     "html-webpack-plugin": "^5.5.0",
     "husky": "^8.0.1",
     "jest": "27.5.1",
+    "lint-staged": "^12.4.1",
     "node-sass": "^7.0.1",
     "nodemon": "2.0.15",
     "parcel": "2.0.1",
@@ -71,10 +73,8 @@
     "path": false,
     "os": false
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm-run-all test lint:all",
-      "pre-push": "npm run other command"
-    }
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix",
+    "*.css": "stylelint --fix"
   }
 }

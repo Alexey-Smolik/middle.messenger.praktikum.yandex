@@ -1,7 +1,7 @@
 import './create-chat.component.scss';
-import { Block, Event } from '../../../components/block';
-import { FormFieldComponent } from '../../../components/form-field/form-field.component';
-import { ChatsService } from '../../../services/api/chats.service';
+import { Block, Event } from '@components/block';
+import { FormFieldComponent } from '@components/form-field/form-field.component';
+import { ChatsService } from '@api/chats.service';
 
 interface CreateChatProps {
     classForRoot?: string;

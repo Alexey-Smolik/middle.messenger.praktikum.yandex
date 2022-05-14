@@ -14,6 +14,11 @@ module.exports = {
         fallback: {
             'path': false,
             'fs': false
+        },
+        alias: {
+            '@components': path.join(__dirname, 'src/components/'),
+            '@api': path.join(__dirname, 'src/services/api'),
+            '@router': path.join(__dirname, '/index.ts')
         }
     },
     module: {

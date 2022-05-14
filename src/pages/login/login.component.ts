@@ -1,10 +1,10 @@
-import {Block, Event} from '../../components/block';
+import {Block, Event} from '@components/block';
 import './login.component.scss';
-import { FormFieldComponent } from '../../components/form-field/form-field.component';
-import { LoaderComponent } from '../../components/loader/loader.component';
-import { AuthService, SigninData } from '../../services/api/auth.service';
+import { FormFieldComponent } from '@components/form-field/form-field.component';
+import { LoaderComponent } from '@components/loader/loader.component';
+import { AuthService, SigninData } from '@api/auth.service';
 import store from '../../services/store/store.service';
-import router from "../../../index";
+import router from '@router';
 
 interface LoginProps {
   loginField?: FormFieldComponent;

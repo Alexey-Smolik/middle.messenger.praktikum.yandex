@@ -1,4 +1,4 @@
-import { Block } from '../../components/block';
+import { Block } from '@components/block';
 import './client-error.component.scss';
 
 interface ClientErrorProps {

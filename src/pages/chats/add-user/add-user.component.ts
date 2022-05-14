@@ -1,8 +1,8 @@
 import './add-user.component.scss';
-import { Block, Event } from '../../../components/block';
-import { FormFieldComponent } from '../../../components/form-field/form-field.component';
-import { UsersService } from '../../../services/api/users.service';
-import { AddDeleteChatUsersParams, ChatsService } from '../../../services/api/chats.service';
+import { Block, Event } from '@components/block';
+import { FormFieldComponent } from '@components/form-field/form-field.component';
+import { UsersService } from '@api/users.service';
+import { AddDeleteChatUsersParams, ChatsService } from '@api/chats.service';
 
 interface AddUserProps {
     classForRoot?: string;
