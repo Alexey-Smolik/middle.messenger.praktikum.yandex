@@ -4,12 +4,14 @@
   "description": "",
   "scripts": {
     "build": "parcel build index.html",
+    "webpack-build": "webpack",
     "dev": "parcel ./index.html --open --port 3000",
     "start": "parcel build index.html && nodemon server.js",
     "test": "jest",
     "watch": "parcel watch ./src/**/**/**/*.**",
     "lint": "eslint ./src",
-    "stylelint": "npx stylelint '**/*.scss'"
+    "stylelint": "npx stylelint '**/*.scss'",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -40,19 +42,39 @@
     "@types/jest": "27.4.1",
     "@typescript-eslint/eslint-plugin": "5.10.2",
     "@typescript-eslint/parser": "5.10.2",
+    "css-loader": "^6.7.1",
     "eslint": "7.32.0",
     "eslint-plugin-import": "2.25.4",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "5.2.0",
+    "html-loader": "^3.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.1",
     "jest": "27.5.1",
+    "lint-staged": "^12.4.1",
+    "node-sass": "^7.0.1",
     "nodemon": "2.0.15",
     "parcel": "2.0.1",
     "sass": "1.49.7",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
     "stylelint": "14.3.0",
     "stylelint-config-standard-scss": "3.0.0",
-    "typescript": "4.5.5"
+    "ts-loader": "^9.3.0",
+    "typescript": "4.5.5",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2"
   },
   "jest": {
     "testEnvironment": "jsdom"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix",
+    "*.css": "stylelint --fix"
   }
 }

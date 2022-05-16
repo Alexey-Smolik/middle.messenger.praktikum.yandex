@@ -3,6 +3,7 @@ import { RegistrationComponent } from './src/pages/registration/registration.com
 import { ProfileComponent } from './src/pages/profile/profile.component';
 import { ChatsComponent } from './src/pages/chats/chats.component';
 import { Router } from './src/routing/router';
+import './src/styles/main.scss';
 
 const router = new Router('.app');
 

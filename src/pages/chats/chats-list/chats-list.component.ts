@@ -1,4 +1,4 @@
-import { Block } from '../../../components/block';
+import { Block } from '@components/block';
 import './chat-list.component.scss';
 import { Chat } from '../../../types/chat.type';
 

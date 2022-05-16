@@ -1,10 +1,10 @@
-import {Block, Event} from '../../components/block';
-  import './profile.component.scss';
-import { FormFieldComponent } from '../../components/form-field/form-field.component';
-import { LoaderComponent } from "../../components/loader/loader.component";
-import { AuthService } from '../../services/api/auth.service';
-import { ChangePasswordData, UserData, UsersService } from '../../services/api/users.service';
-import router from "../../../index";
+import {Block, Event} from '@components/block';
+import './profile.component.scss';
+import { FormFieldComponent } from '@components/form-field/form-field.component';
+import { LoaderComponent } from "@components/loader/loader.component";
+import { AuthService } from '@api/auth.service';
+import { ChangePasswordData, UserData, UsersService } from '@api/users.service';
+import router from '@router';
 
 interface ProfileProps {
   emailField?: FormFieldComponent;

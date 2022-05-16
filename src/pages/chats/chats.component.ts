@@ -1,13 +1,13 @@
-import { Block } from '../../components/block';
+import { Block } from '@components/block';
 import './chats.component.scss';
 import { ChatsListComponent } from './chats-list/chats-list.component';
 import { MessagesWindowComponent } from './messages-window/messages-window.component';
 import { CreateChatComponent } from './create-chat/create-chat.component';
-import { ChatsService } from '../../services/api/chats.service';
-import { AuthService } from '../../services/api/auth.service';
+import { ChatsService } from '@api/chats.service';
+import { AuthService } from '@api/auth.service';
 import store from '../../services/store/store.service';
 import { Chat } from '../../types/chat.type';
-import router from "../../../index";
+import router from '@router';
 
 interface ProfileProps {
   chatsList?: ChatsListComponent;

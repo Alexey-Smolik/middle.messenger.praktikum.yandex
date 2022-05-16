@@ -1,4 +1,4 @@
-import { EventBus } from '../../components/event-bus';
+import { EventBus } from '@components/event-bus';
 
 type Indexed<T = any> = {
     [key in string]: T;

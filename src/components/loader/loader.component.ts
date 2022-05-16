@@ -1,5 +1,5 @@
 import { Block } from '../block';
-import './loader.component.css';
+import './loader.component.scss';
 
 export interface LoaderProps {
     classForRoot?: string;

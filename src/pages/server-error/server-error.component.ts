@@ -1,4 +1,4 @@
-import { Block } from '../../components/block';
+import { Block } from '@components/block';
 import './server-error.component.scss';
 
 interface ServerErrorProps {
